@@ -50,6 +50,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+!gsap-bonus.tgz
 
 # dotenv environment variable files
 .env*

@@ -1,0 +1,340 @@
+import React, { useEffect } from "react"
+import styled from "styled-components"
+import { graphql } from "gatsby"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import PhotoSlider from "../components/PhotoSlider/PhotoSlider"
+
+const SlidersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`
+
+const TestDiv = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: #fabb;
+  display: flex;
+  background: #fabb;
+  justify-content: center;
+  align-items: center;
+`
+
+gsap.registerPlugin(ScrollTrigger)
+
+const FashionPage = ({ data }) => {
+  useEffect(() => {
+    //let slider = document.querySelector(".slider")
+    //let sliderImages = document.querySelector(".slider-images")
+
+    const getSliderImagesTotalWidth = thisSlider => {
+      let totalWidth = 0
+      let sliderImages = [
+        ...document.querySelectorAll(
+          "." + thisSlider.classList[3] + " .slider-images > img"
+        ),
+      ]
+      sliderImages.map(image => {
+        totalWidth += image.offsetWidth
+      })
+      return totalWidth
+    }
+    //getSliderImagesTotalWidth()
+    //console.log(totalWidth)
+
+    document.querySelectorAll(".slider-container").forEach(sliderContainer => {
+      const slider = sliderContainer.querySelector(".slider")
+      let screenWidth = window.screen.width
+      const onLeaveFunc = () => {
+        //tl.restart()
+        //tl.pause()
+        tl.progress(0)
+      }
+      const addMarginTopWhileNotAdded = () => {
+        let sliderMarginTop = slider.style.marginTop
+        return sliderMarginTop === "10vh" ? "10vh" : 0
+      }
+      //const modifyLabelStyles = () => {
+      // return (screenWidth <== 1024) ? scale
+      // }
+
+      let tl = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: slider,
+            //start: "top top",
+            //end: "bottom bottom",
+            // end: `+=${
+            //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+            // }px`,
+            end: "+=300%",
+            pin: slider,
+            markers: true,
+            scrub: true,
+            toggleClass: "active",
+            //toggleActions: "restart none none reset",
+            //onLeaveBack: () => scrollTrigger.pause(),
+            onLeave: () => onLeaveFunc(),
+            //onEnterBack: () => tl.clear(true),
+          },
+        })
+
+        .to(slider, {
+          duration: 0.25,
+          //marginTop: () => addMarginToFirstSlider(slider),
+          marginTop: "10vh",
+          //marginBottom: "10vh",
+          paddingLeft: 0,
+          paddingRight: 0,
+          marginLeft: 0,
+          xPercent: 0,
+        })
+        .to(slider.querySelectorAll(".slider-images img"), {
+          duration: 0.5,
+          ease: "power1",
+          opacity: 1,
+        })
+        .to(slider.querySelector(".slider-label"), {
+          duration: 0.5,
+          scale: () => (screenWidth <= 1024 ? 1 : 1.3),
+          //autoAlpha: 0,
+          //rotation: "360",
+          //ease: "power1",
+        })
+        .to(slider.querySelector(".slider-images"), {
+          duration: 15,
+          x: () =>
+            -(
+              getSliderImagesTotalWidth(slider) -
+              document.documentElement.clientWidth
+            ),
+        })
+        .to(slider, {
+          duration: 0.25,
+          marginTop: () => addMarginTopWhileNotAdded(slider),
+        })
+    })
+  })
+
+  return (
+    <>
+      <SlidersContainer>
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider1"}
+          sliderLabel={
+            "PLASTIC BONES Summer 2017 / Womenswear Collection / 2017 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider2"}
+          sliderLabel={
+            "PLASTIC BONES Summer 2016 & Autumn-Winter 2016/17 Packshots / Womenswear Collections / 2016 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider3"}
+          sliderLabel={
+            "PLASTIC BONES Winter 2015/16 / Womenswear Collection / 2015 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider4"}
+          sliderLabel={
+            "PLASTIC BONES Autumn 2015 / Womenswear Collection / 2015 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider5"}
+          sliderLabel={
+            "PLASTIC BONES Spring-Summer 2015 / Women's & Menswear Collection / 2015 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider6"}
+          sliderLabel={
+            "Sound of Silence / Women's & Menswear Collection / 2014 /"
+          }
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider7"}
+          sliderLabel={"Wizard of Oz / Film Costumes Collection / 2013 /"}
+        />
+        <PhotoSlider
+          graphQlData={data}
+          sliderName={"slider8"}
+          sliderLabel={"Blend Pigment / Womenswear Collection / 2012 /"}
+        />
+        <TestDiv>
+          <h1>Test Text</h1>
+        </TestDiv>
+      </SlidersContainer>
+    </>
+  )
+}
+
+export const query = graphql`
+  query {
+    slider1: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/Summer2017" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider2: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/Summer2016" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider3: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/Winter15-16" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider4: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/Autumn2015" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider5: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/SpringSummer2015" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider6: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/SoundOfSilence2014" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider7: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/WizardOfOz2013" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+    slider8: allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+        relativeDirectory: { eq: "fashion/BlendPigment2012" }
+      }
+      sort: { fields: name, order: ASC }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 100) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export default FashionPage

@@ -12,11 +12,12 @@ const FormWrapper = styled.div`
       padding: 10px;
       margin-top: 10px;
       background-color: transparent;
-
+      border: 2px solid
+        ${({ theme }) => (theme.isDark ? theme.light : theme.primary)};
       text-transform: uppercase;
-
+      color: ${({ theme }) => (theme.isDark ? theme.light : theme.primary)};
       font-weight: 600;
-
+      font-size: ${({ theme }) => theme.font.size.l};
       letter-spacing: 1px;
       box-shadow: none;
       outline: none;
@@ -55,6 +56,7 @@ const InputWrapper = styled.div`
   margin-bottom: 22px;
   position: relative;
   label {
+    color: ${({ theme }) => (theme.isDark ? theme.light : theme.primary)};
     font-weight: 300;
     abbr {
       margin-left: 2px;
@@ -65,9 +67,11 @@ const InputWrapper = styled.div`
     width: 100%;
     max-width: 100%;
     padding: 11px;
-
+    border: 1px solid
+      ${({ theme }) => (theme.isDark ? theme.white : theme.grey)};
+    background: ${({ theme }) => theme.white};
     color: #000;
-
+    font-size: ${({ theme }) => theme.font.size.l};
     cursor: text;
     box-shadow: none;
     outline: none;
@@ -78,7 +82,8 @@ const InputWrapper = styled.div`
   }
   p {
     margin: 2px 0 0 0;
-
+    color: ${({ theme }) => theme.error};
+    font-size: ${({ theme }) => theme.font.size.s};
     font-weight: 300;
     position: relative;
     animation: appear 0.5s ease;
@@ -98,7 +103,7 @@ const FocusWrapper = styled.div`
     right: 0;
     width: 0;
     height: 3px;
-
+    background-color: ${({ theme }) => theme.pink};
     transition: 0.2s;
     transition-delay: 0.2s;
   }
@@ -117,7 +122,7 @@ const FocusWrapper = styled.div`
     left: 0;
     width: 3px;
     height: 0;
-
+    background-color: ${({ theme }) => theme.pink};
     transition: 0.2s;
   }
   .focus-border i:after {
