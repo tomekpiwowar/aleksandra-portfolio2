@@ -22,27 +22,31 @@ const MasonryContainer = styled.div`
     }
   }
 `
-gsap.registerPlugin(ScrollTrigger)
+
 const GraphicDesignPage = ({ data }) => {
   useEffect(() => {
-    const offers = document.querySelectorAll(".gallery-element")
-    offers.forEach(offer => {
-      gsap.fromTo(
-        offer,
-        { y: "+=50", opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "easeInOut",
-          scrollTrigger: {
-            trigger: offer,
-            start: "top 80%",
-            //end: "bottom",
-          },
-        }
-      )
-    })
+    setTimeout(() => {
+      gsap.registerPlugin(ScrollTrigger)
+      ScrollTrigger.refresh()
+      const offers = document.querySelectorAll(".gallery-element")
+      offers.forEach(offer => {
+        gsap.fromTo(
+          offer,
+          { y: "+=50", opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "easeInOut",
+            scrollTrigger: {
+              trigger: offer,
+              start: "top 80%",
+              //end: "bottom",
+            },
+          }
+        )
+      })
+    }, 100)
   })
 
   return (

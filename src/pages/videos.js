@@ -11,26 +11,29 @@ const VideosContainer = styled(Container)`
   overflow-x: hidden;
 `
 
-gsap.registerPlugin(ScrollTrigger)
 const VideosPage = () => {
   useEffect(() => {
-    const separators = document.querySelectorAll(".separator")
-    separators.forEach(separator => {
-      gsap.fromTo(
-        separator,
-        { width: 0 },
-        {
-          width: "100%",
-          duration: 1.2,
-          ease: "easeInOut",
-          scrollTrigger: {
-            trigger: separator,
-            start: "top 90%",
-            //end: "bottom",
-          },
-        }
-      )
-    })
+    setTimeout(() => {
+      gsap.registerPlugin(ScrollTrigger)
+      ScrollTrigger.refresh()
+      const separators = document.querySelectorAll(".separator")
+      separators.forEach(separator => {
+        gsap.fromTo(
+          separator,
+          { width: 0 },
+          {
+            width: "100%",
+            duration: 1.2,
+            ease: "easeInOut",
+            scrollTrigger: {
+              trigger: separator,
+              start: "top 90%",
+              //end: "bottom",
+            },
+          }
+        )
+      })
+    }, 100)
   })
 
   return (

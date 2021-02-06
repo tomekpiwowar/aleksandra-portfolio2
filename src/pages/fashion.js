@@ -11,110 +11,162 @@ const SlidersContainer = styled.div`
   overflow: hidden;
 `
 
-const TestDiv = styled.div`
+const StyledDiv = styled.div`
   width: 100%;
   height: 100vh;
-  background: #fabb;
+  background: transparent;
   display: flex;
-  background: #fabb;
   justify-content: center;
   align-items: center;
 `
 
-gsap.registerPlugin(ScrollTrigger)
+const ScrollToTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    opacity: 0;
+  }
+`
 
 const FashionPage = ({ data }) => {
   useEffect(() => {
-    //let slider = document.querySelector(".slider")
-    //let sliderImages = document.querySelector(".slider-images")
+    setTimeout(() => {
+      gsap.registerPlugin(ScrollTrigger)
+      ScrollTrigger.refresh()
+      //let slider = document.querySelector(".slider")
+      //let sliderImages = document.querySelector(".slider-images")
 
-    const getSliderImagesTotalWidth = thisSlider => {
-      let totalWidth = 0
-      let sliderImages = [
-        ...document.querySelectorAll(
-          "." + thisSlider.classList[3] + " .slider-images > img"
-        ),
-      ]
-      sliderImages.map(image => {
-        totalWidth += image.offsetWidth
-      })
-      return totalWidth
-    }
-    //getSliderImagesTotalWidth()
-    //console.log(totalWidth)
-
-    document.querySelectorAll(".slider-container").forEach(sliderContainer => {
-      const slider = sliderContainer.querySelector(".slider")
-      let screenWidth = window.screen.width
-      const onLeaveFunc = () => {
-        //tl.restart()
-        //tl.pause()
-        tl.progress(0)
+      const getSliderImagesTotalWidth = thisSlider => {
+        let totalWidth = 0
+        let sliderImages = [
+          ...document.querySelectorAll(
+            "." + thisSlider.classList[3] + " .slider-images > img"
+          ),
+        ]
+        sliderImages.map(image => {
+          totalWidth += image.offsetWidth
+        })
+        return totalWidth
       }
-      const addMarginTopWhileNotAdded = () => {
-        let sliderMarginTop = slider.style.marginTop
-        return sliderMarginTop === "10vh" ? "10vh" : 0
-      }
-      //const modifyLabelStyles = () => {
-      // return (screenWidth <== 1024) ? scale
-      // }
+      //getSliderImagesTotalWidth()
+      //console.log(totalWidth)
 
-      let tl = gsap
+      document
+        .querySelectorAll(".slider-container")
+        .forEach(sliderContainer => {
+          const slider = sliderContainer.querySelector(".slider")
+          let screenWidth = window.screen.width
+          const onLeaveFunc = () => {
+            //tl.restart()
+            //tl.pause()
+            tl.progress(0)
+          }
+          // const onEnterBackFunc = () => {
+          //   //tl.pause(0).kill(true)
+          //   //console.log(ScrollTrigger.getById("slider1"))
+          //   //ScrollTrigger.getAll().forEach(st => st.kill())
+          //   //tl.pause(0).kill(true)
+          //   //ScrollTrigger.end = "0"
+          //   //ScrollTrigger.getById("slider1").kill(true)
+          // }
+          const addMarginTopWhileNotAdded = () => {
+            let sliderMarginTop = slider.style.marginTop
+            return sliderMarginTop === "10vh" ? "10vh" : 0
+          }
+          //const modifyLabelStyles = () => {
+          // return (screenWidth <== 1024) ? scale
+          // }
+
+          let tl = gsap
+            .timeline({
+              scrollTrigger: {
+                id: "slider1",
+                trigger: slider,
+                //start: "top top",
+                //end: "bottom bottom",
+                // end: `+=${
+                //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+                // }px`,
+                end: "+=300%",
+                pin: slider,
+                //markers: true,
+                scrub: true,
+                toggleClass: "active",
+                //toggleActions: "restart none none reset",
+                //onLeaveBack: () => scrollTrigger.pause(),
+                onLeave: () => onLeaveFunc(),
+                //onEnterBack: () => onEnterBackFunc(),
+              },
+            })
+
+            .to(slider, {
+              duration: 0.25,
+              //marginTop: () => addMarginToFirstSlider(slider),
+              marginTop: "10vh",
+              //marginBottom: "10vh",
+              paddingLeft: 0,
+              paddingRight: 0,
+              marginLeft: 0,
+              xPercent: 0,
+            })
+            .to(slider.querySelectorAll(".slider-images img"), {
+              duration: 0.5,
+              ease: "power1",
+              opacity: 1,
+            })
+            .to(slider.querySelector(".slider-label"), {
+              duration: 0.5,
+              scale: () => (screenWidth <= 1024 ? 1 : 1.3),
+              //autoAlpha: 0,
+              //rotation: "360",
+              //ease: "power1",
+            })
+            .to(slider.querySelector(".slider-images"), {
+              duration: 15,
+              x: () =>
+                -(
+                  getSliderImagesTotalWidth(slider) -
+                  document.documentElement.clientWidth
+                ),
+            })
+            .to(slider, {
+              duration: 0.25,
+              marginTop: () => addMarginTopWhileNotAdded(slider),
+            })
+        })
+
+      const lastSection = document.querySelector(".last-section")
+      const lastSectionText = lastSection.querySelector("h1")
+      let tl2 = gsap
         .timeline({
           scrollTrigger: {
-            trigger: slider,
-            //start: "top top",
+            trigger: lastSection,
+            start: "top bottom-=10%",
             //end: "bottom bottom",
             // end: `+=${
             //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
             // }px`,
-            end: "+=300%",
-            pin: slider,
+            end: "bottom bottom",
+            //pin: true,
             markers: true,
             scrub: true,
-            toggleClass: "active",
             //toggleActions: "restart none none reset",
             //onLeaveBack: () => scrollTrigger.pause(),
-            onLeave: () => onLeaveFunc(),
-            //onEnterBack: () => tl.clear(true),
+            //onEnterBack: () => onEnterBackFunc(),
           },
         })
 
-        .to(slider, {
-          duration: 0.25,
-          //marginTop: () => addMarginToFirstSlider(slider),
-          marginTop: "10vh",
-          //marginBottom: "10vh",
-          paddingLeft: 0,
-          paddingRight: 0,
-          marginLeft: 0,
-          xPercent: 0,
+        .to(lastSection, {
+          duration: 3,
+          backgroundColor: "#f98bb0",
         })
-        .to(slider.querySelectorAll(".slider-images img"), {
-          duration: 0.5,
-          ease: "power1",
+        .to(lastSectionText, {
           opacity: 1,
         })
-        .to(slider.querySelector(".slider-label"), {
-          duration: 0.5,
-          scale: () => (screenWidth <= 1024 ? 1 : 1.3),
-          //autoAlpha: 0,
-          //rotation: "360",
-          //ease: "power1",
-        })
-        .to(slider.querySelector(".slider-images"), {
-          duration: 15,
-          x: () =>
-            -(
-              getSliderImagesTotalWidth(slider) -
-              document.documentElement.clientWidth
-            ),
-        })
-        .to(slider, {
-          duration: 0.25,
-          marginTop: () => addMarginTopWhileNotAdded(slider),
-        })
-    })
+    }, 500)
   })
 
   return (
@@ -172,9 +224,14 @@ const FashionPage = ({ data }) => {
           sliderName={"slider8"}
           sliderLabel={"Blend Pigment / Womenswear Collection / 2012 /"}
         />
-        <TestDiv>
-          <h1>Test Text</h1>
-        </TestDiv>
+        <StyledDiv className="last-section">
+          <ScrollToTop>
+            <h1>Back to top</h1>
+            <span role="img" aria-label="point up">
+              ☝️
+            </span>
+          </ScrollToTop>
+        </StyledDiv>
       </SlidersContainer>
     </>
   )

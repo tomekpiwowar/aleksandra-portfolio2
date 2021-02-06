@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Formik, Form, Field, ErrorMessage } from "formik"
+import Modal from "./Modal"
 
 const FormWrapper = styled.div`
   width: 100%;
@@ -163,114 +164,145 @@ const encode = data => {
     .join("&")
 }
 
-const ContactForm = () => (
-  <FormWrapper>
-    <Formik
-      initialValues={{
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      }}
-      onSubmit={(values, actions) => {
-        fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encode({ "form-name": "contact-form", ...values }),
-        })
-          .then(() => {
-            alert("Success")
-            actions.resetForm()
-          })
-          .catch(() => {
-            alert("Error")
-          })
-          .finally(() => actions.setSubmitting(false))
-      }}
-      validate={values => {
-        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-        const errors = {}
-        if (!values.name) {
-          errors.name = "Name Required"
-        }
-        if (!values.email || !emailRegex.test(values.email)) {
-          errors.email = "Valid Email Required"
-        }
-        if (!values.subject) {
-          errors.subject = "Subject Required"
-        }
-        if (!values.message) {
-          errors.message = "Message Required"
-        }
-        return errors
-      }}
-    >
-      <Form
-        name="contact-form"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-      >
-        <Field type="hidden" name="form-name" value="contact-form" />
-        <Field type="hidden" name="bot-field" />
+const ContactForm = () => {
+  const [isModalOpen, setModalState] = useState(false)
 
-        <TwoColumnsRow>
-          <InputWrapper>
-            <label htmlFor="name">
-              Name<abbr>*</abbr>
-            </label>
-            <FocusWrapper>
-              <Field name="name" />
-              <span className="focus-border">
-                <i></i>
-              </span>
-            </FocusWrapper>
-            <ErrorMessage name="name" component="p" />
-          </InputWrapper>
+  const toggleModal = () => {
+    setModalState(!isModalOpen)
+  }
 
-          <InputWrapper>
-            <label htmlFor="email">
-              Email Address<abbr>*</abbr>
-            </label>
-            <FocusWrapper>
-              <Field name="email" />
-              <span className="focus-border">
-                <i></i>
-              </span>
-            </FocusWrapper>
-            <ErrorMessage name="email" component="p" />
-          </InputWrapper>
-        </TwoColumnsRow>
+  const closeModal = () => {
+    isModalOpen && toggleModal()
+  }
 
-        <InputWrapper>
-          <label htmlFor="subject">
-            Subject<abbr>*</abbr>
-          </label>
-          <FocusWrapper>
-            <Field name="subject" />
-            <span className="focus-border">
-              <i></i>
-            </span>
-          </FocusWrapper>
-          <ErrorMessage name="subject" component="p" />
-        </InputWrapper>
+  const modalMessages = {
+    success: "Your message was sent successfully 🎉",
+    error: "Error",
+  }
 
-        <InputWrapper>
-          <label htmlFor="message">
-            Message<abbr>*</abbr>
-          </label>
-          <FocusWrapper>
-            <Field name="message" component="textarea" />
-            <span className="focus-border">
-              <i></i>
-            </span>
-          </FocusWrapper>
-          <ErrorMessage name="message" component="p" />
-        </InputWrapper>
+  const [modalMessage, setModalMessage] = useState("")
 
-        <button type="submit">Send</button>
-      </Form>
-    </Formik>
-  </FormWrapper>
-)
+  useEffect(() => {
+    document.querySelector("p.modal-message").innerText = modalMessage
+  })
+
+  return (
+    <>
+      <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <FormWrapper>
+        <Formik
+          initialValues={{
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          }}
+          onSubmit={(values, actions) => {
+            fetch("/", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: encode({ "form-name": "contact-form", ...values }),
+            })
+              .then(() => {
+                setModalMessage(modalMessages.success)
+                toggleModal()
+              })
+              .catch(() => {
+                setModalMessage(modalMessages.error)
+                toggleModal()
+              })
+              .finally(() => actions.setSubmitting(false))
+          }}
+          validate={values => {
+            const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+            const errors = {}
+            if (!values.name) {
+              errors.name = "Name Required"
+            }
+            if (!values.email || !emailRegex.test(values.email)) {
+              errors.email = "Valid Email Required"
+            }
+            if (!values.subject) {
+              errors.subject = "Subject Required"
+            }
+            if (!values.message) {
+              errors.message = "Message Required"
+            }
+            return errors
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form
+              name="contact-form"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+            >
+              <Field type="hidden" name="form-name" value="contact-form" />
+              <Field type="hidden" name="bot-field" />
+
+              <TwoColumnsRow>
+                <InputWrapper>
+                  <label htmlFor="name">
+                    Name<abbr>*</abbr>
+                  </label>
+                  <FocusWrapper>
+                    <Field name="name" />
+                    <span className="focus-border">
+                      <i></i>
+                    </span>
+                  </FocusWrapper>
+                  <ErrorMessage name="name" component="p" />
+                </InputWrapper>
+
+                <InputWrapper>
+                  <label htmlFor="email">
+                    Email Address<abbr>*</abbr>
+                  </label>
+                  <FocusWrapper>
+                    <Field name="email" />
+                    <span className="focus-border">
+                      <i></i>
+                    </span>
+                  </FocusWrapper>
+                  <ErrorMessage name="email" component="p" />
+                </InputWrapper>
+              </TwoColumnsRow>
+
+              <InputWrapper>
+                <label htmlFor="subject">
+                  Subject<abbr>*</abbr>
+                </label>
+                <FocusWrapper>
+                  <Field name="subject" />
+                  <span className="focus-border">
+                    <i></i>
+                  </span>
+                </FocusWrapper>
+                <ErrorMessage name="subject" component="p" />
+              </InputWrapper>
+
+              <InputWrapper>
+                <label htmlFor="message">
+                  Message<abbr>*</abbr>
+                </label>
+                <FocusWrapper>
+                  <Field name="message" component="textarea" />
+                  <span className="focus-border">
+                    <i></i>
+                  </span>
+                </FocusWrapper>
+                <ErrorMessage name="message" component="p" />
+              </InputWrapper>
+
+              <button type="submit" disabled={isSubmitting}>
+                Send
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </FormWrapper>
+    </>
+  )
+}
 
 export default ContactForm
