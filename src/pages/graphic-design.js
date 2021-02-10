@@ -46,7 +46,7 @@ const GraphicDesignPage = ({ data }) => {
           }
         )
       })
-    }, 100)
+    }, 500)
   })
 
   return (

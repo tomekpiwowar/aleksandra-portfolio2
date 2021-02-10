@@ -1,4 +1,5 @@
 import React from "react"
+import Cursor from "../components/Cursor/Cursor"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import GlobalStyle from "../assets/styles/GlobalStyles"
@@ -14,6 +15,7 @@ const MainLayout = ({ children }) => (
       <Header />
       {children}
       <Footer />
+      <Cursor />
     </ThemeProvider>
   </>
 )

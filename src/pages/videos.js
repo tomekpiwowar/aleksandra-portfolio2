@@ -33,7 +33,7 @@ const VideosPage = () => {
           }
         )
       })
-    }, 100)
+    }, 500)
   })
 
   return (

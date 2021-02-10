@@ -44,10 +44,64 @@ const HeroContainer = styled(Container)`
 
 const IndexPage = ({ data }) => {
   useEffect(() => {
-    setTimeout(() => {
-      gsap.registerPlugin(ScrollTrigger)
-      ScrollTrigger.refresh()
-    }, 500)
+    //setTimeout(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.refresh()
+    //}, 500)
+
+    const body = document.querySelector("body")
+    const heroImages = [
+      ...document.querySelectorAll(".hero-images-wrapper img"),
+    ]
+    const heroImage1 = heroImages[0]
+    const heroImage2 = heroImages[1]
+
+    gsap.set(heroImage1, {
+      transformStyle: "preserve-3d",
+      backfaceVisibility: "hidden",
+      outline: "1px solid transparent",
+    })
+    gsap.set(heroImage2, {
+      transformStyle: "preserve-3d",
+      backfaceVisibility: "hidden",
+      outline: "1px solid transparent",
+    })
+
+    body.addEventListener("mousemove", e => {
+      let sxPos = (e.pageX / body.clientWidth) * 100 - 50
+      let syPos = (e.pageY / body.clientHeight) * 100 - 50
+      //console.log("x:" + sxPos + ", y:" + syPos)
+      gsap.to(heroImage1, {
+        duration: 1,
+        rotationY: 0.08 * sxPos,
+        rotationX: 0.03 * syPos,
+        rotationZ: "0",
+        y: -0.2 * syPos,
+        x: -0.5 * sxPos,
+        transformPerspective: 500,
+        transformOrigin: "center center",
+        boxShadow: "0 0 1px rgba(0, 0, 0, 0.05)",
+      })
+      gsap.to(heroImage2, {
+        duration: 1,
+        rotationY: 0.08 * sxPos,
+        rotationX: 0.03 * syPos,
+        rotationZ: "0",
+        y: -0.2 * syPos,
+        x: -0.5 * sxPos,
+        transformPerspective: 500,
+        transformOrigin: "center center",
+        boxShadow: "0 0 1px rgba(0, 0, 0, 0.05)",
+      })
+      // gsap.to(heroImage2, {
+      //   duration: 1,
+      //   rotationY: 0.1 * sxPos,
+      //   rotationX: 0.15 * syPos,
+      //   rotationZ: 0,
+      //   transformPerspective: 500,
+      //   transformOrigin: "center center",
+      // })
+    })
   })
   return (
     <>

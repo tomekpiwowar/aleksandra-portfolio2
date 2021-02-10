@@ -71,16 +71,25 @@ const NavigationWrapper = styled.ul`
     a {
       margin: 15px 15px;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 500;
       font-size: ${({ theme }) => theme.font.size.s};
-      color: ${({ theme }) => (theme.isDark ? theme.light : theme.grey)};
+      color: ${({ theme }) => (theme.isDark ? theme.grey : theme.primary)};
       text-decoration: none;
-      transition: color 0.3s ease;
-      &.active {
-        color: ${({ theme }) => (theme.isDark ? theme.grey : theme.primary)};
+      position: relative;
+      &::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 3px;
+        background-color: ${({ theme }) => theme.pink};
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
       }
-      &:hover {
-        color: ${({ theme }) => (theme.isDark ? theme.grey : theme.primary)};
+      &.active::after,
+      &:hover::after {
+        width: 100%;
       }
       @media (max-width: 1024px) {
         display: block;

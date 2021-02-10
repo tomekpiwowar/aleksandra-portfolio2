@@ -19,7 +19,7 @@ module.exports = {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
         google: {
-          families: ["Montserrat:400,700", "Mukta:300,500,600"],
+          families: ["Montserrat:700", "Poppins:300,400,500,600"],
         },
       },
     },

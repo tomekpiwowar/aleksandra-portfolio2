@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         font-size: 1.6rem;
-        font-family: 'Mukta';
+        font-family: 'Poppins';
         background-color: ${({ theme }) =>
           theme.isDark ? theme.darkGrey : theme.white};
         transition: background-color 0.5s ease;
@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
     textarea,
     button,
     abbr {
-        font-family: 'Mukta';
+        font-family: 'Poppins';
     }
 
 
@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
     p {
         font-size: 16px;
         line-height: 1.4;
-        font-weight: 500;
+        font-weight: 400;
         color: ${({ theme }) => (theme.isDark ? theme.light : theme.primary)};
         transition: color 0.5s ease;
         margin-top: 0;
