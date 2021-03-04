@@ -13,38 +13,31 @@ const VideosContainer = styled(Container)`
 
 const VideosPage = () => {
   useEffect(() => {
-    setTimeout(() => {
-      gsap.registerPlugin(ScrollTrigger)
-      ScrollTrigger.refresh()
-      const separators = document.querySelectorAll(".separator")
-      separators.forEach(separator => {
-        gsap.fromTo(
-          separator,
-          { width: 0 },
-          {
-            width: "100%",
-            duration: 1.2,
-            ease: "easeInOut",
-            scrollTrigger: {
-              trigger: separator,
-              start: "top 90%",
-              //end: "bottom",
-            },
-          }
-        )
-      })
-    }, 500)
+    //setTimeout(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.refresh()
+    const separators = document.querySelectorAll(".separator")
+    separators.forEach(separator => {
+      gsap.fromTo(
+        separator,
+        { width: 0 },
+        {
+          width: "100%",
+          duration: 1.2,
+          ease: "easeInOut",
+          scrollTrigger: {
+            trigger: separator,
+            start: "top 90%",
+            //end: "bottom",
+          },
+        }
+      )
+    })
+    //}, 500)
   })
 
   return (
     <VideosContainer>
-      <VideoSection
-        videoSrc={"https://www.youtube.com/embed/9EVpaQrScvE"}
-        videoLabel={
-          "Peter J. Birch - Fate / 2014. Concept / Direction / Photography / Editing"
-        }
-      />
-      <Separator />
       <VideoSection
         videoSrc={"https://player.vimeo.com/video/80186682"}
         videoLabel={
@@ -53,7 +46,7 @@ const VideosPage = () => {
       />
       <Separator />
       <VideoSection
-        videoSrc={"https://www.youtube.com/embed/9EVpaQrScvE"}
+        videoSrc={"https://www.youtube.com/embed/QJetXyABPTE"}
         videoLabel={
           "Peter J. Birch - Claudette / 2012. Concept / Direction / Photography / Editing."
         }

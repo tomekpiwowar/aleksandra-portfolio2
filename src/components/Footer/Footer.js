@@ -12,6 +12,7 @@ const FooterContainer = styled(Container)`
   padding-bottom: 30px;
   p {
     margin: 0;
+    font-size: ${({ theme }) => theme.font.size.m};
   }
   @media (max-width: 1024px) {
     padding-top: 20px;
@@ -20,7 +21,7 @@ const FooterContainer = styled(Container)`
 `
 
 const Footer = () => (
-  <StyledFooter>
+  <StyledFooter className="intro__footer">
     <FooterContainer>
       <p>
         © 2009 - {new Date().getFullYear()} Aleksandra Kiszka Studio. All rights

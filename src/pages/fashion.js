@@ -11,26 +11,6 @@ const SlidersContainer = styled.div`
   overflow: hidden;
 `
 
-const StyledDiv = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const ScrollToTop = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    opacity: 0;
-  }
-`
-
 const FashionPage = ({ data }) => {
   useEffect(() => {
     setTimeout(() => {
@@ -85,7 +65,7 @@ const FashionPage = ({ data }) => {
               scrollTrigger: {
                 id: "slider1",
                 trigger: slider,
-                //start: "top top",
+                start: "top top",
                 //end: "bottom bottom",
                 // end: `+=${
                 //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
@@ -102,11 +82,12 @@ const FashionPage = ({ data }) => {
               },
             })
 
+            // .to(slider, {
+            //   duration: 0.25,
+            //   marginTop: "10vh",
+            // })
             .to(slider, {
               duration: 0.25,
-              //marginTop: () => addMarginToFirstSlider(slider),
-              marginTop: "10vh",
-              //marginBottom: "10vh",
               paddingLeft: 0,
               paddingRight: 0,
               marginLeft: 0,
@@ -120,9 +101,6 @@ const FashionPage = ({ data }) => {
             .to(slider.querySelector(".slider-label"), {
               duration: 0.5,
               scale: () => (screenWidth <= 1024 ? 1 : 1.3),
-              //autoAlpha: 0,
-              //rotation: "360",
-              //ease: "power1",
             })
             .to(slider.querySelector(".slider-images"), {
               duration: 15,
@@ -136,35 +114,6 @@ const FashionPage = ({ data }) => {
               duration: 0.25,
               marginTop: () => addMarginTopWhileNotAdded(slider),
             })
-        })
-
-      const lastSection = document.querySelector(".last-section")
-      const lastSectionText = lastSection.querySelector("h1")
-      let tl2 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: lastSection,
-            start: "top bottom-=10%",
-            //end: "bottom bottom",
-            // end: `+=${
-            //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
-            // }px`,
-            end: "bottom bottom",
-            //pin: true,
-            markers: true,
-            scrub: true,
-            //toggleActions: "restart none none reset",
-            //onLeaveBack: () => scrollTrigger.pause(),
-            //onEnterBack: () => onEnterBackFunc(),
-          },
-        })
-
-        .to(lastSection, {
-          duration: 3,
-          backgroundColor: "#f98bb0",
-        })
-        .to(lastSectionText, {
-          opacity: 1,
         })
     }, 500)
   })
@@ -224,14 +173,6 @@ const FashionPage = ({ data }) => {
           sliderName={"slider8"}
           sliderLabel={"Blend Pigment / Womenswear Collection / 2012 /"}
         />
-        <StyledDiv className="last-section">
-          <ScrollToTop>
-            <h1>Back to top</h1>
-            <span role="img" aria-label="point up">
-              ☝️
-            </span>
-          </ScrollToTop>
-        </StyledDiv>
       </SlidersContainer>
     </>
   )

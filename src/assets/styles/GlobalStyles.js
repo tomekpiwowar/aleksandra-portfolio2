@@ -77,6 +77,21 @@ const GlobalStyle = createGlobalStyle`
           bottom: -20px;
         }
     }
+
+    @keyframes ping {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      80% {
+        transform: scale(1.9);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(2.4);
+        opacity: 0;
+      }
+    }
   `
 
 export default GlobalStyle

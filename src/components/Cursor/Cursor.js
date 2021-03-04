@@ -48,11 +48,23 @@ const Cursor = () => {
     function mouseMoveHandler(e) {
       mouse.x = e.x
       mouse.y = e.y
-      if (e.target.tagName.toLowerCase() === ("a" || "button")) {
-        circle.classList.add("hoverState")
-      } else {
-        circle.classList.remove("hoverState")
-      }
+
+      let allHoveredLayers = e.path
+      let isHoveredLayerLink = allHoveredLayers.filter(layer => {
+        return layer.tagName === "A" || layer.tagName === "BUTTON"
+      })
+      isHoveredLayerLink.length
+        ? circle.classList.add("hoverState")
+        : circle.classList.remove("hoverState")
+
+      // if (
+      //   e.target.tagName.toLowerCase() === "a" ||
+      //   e.target.tagName.toLowerCase() === "button"
+      // ) {
+      //   circle.classList.add("hoverState")
+      // } else {
+      //   circle.classList.remove("hoverState")
+      // }
     }
 
     gsap.ticker.add((time, deltaTime) => {

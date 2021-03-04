@@ -22,7 +22,7 @@ const HeaderContainer = styled(Container)`
 `
 
 const Logo = styled.h1`
-  font-size: ${({ theme }) => theme.font.size.m};
+  font-size: ${({ theme }) => theme.font.size.l};
   margin: 0;
   a {
     text-decoration: none;
@@ -36,13 +36,13 @@ const Logo = styled.h1`
 `
 
 const StyledNav = styled.nav`
-  position: relative;
-  right: -65px;
+  //position: relative;
+  //right: -65px;
   display: inline-flex;
   align-items: center;
 
   @media (max-width: 1024px) {
-    position: unset;
+    //position: unset;
   }
 `
 
@@ -131,10 +131,10 @@ const Header = props => {
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo>
+        <Logo className="intro__logo">
           <Link to="/">Aleksandra Kiszka</Link>
         </Logo>
-        <StyledNav>
+        <StyledNav className="intro__main-nav">
           <NavigationWrapper isOpen={isMenuOpen}>
             <li>
               <Link to="/" activeClassName="active" onClick={closeMenu}>
@@ -167,7 +167,11 @@ const Header = props => {
             </li>
           </NavigationWrapper>
           <ThemeSwitcher themeContext={themeContext} isOpen={isMenuOpen} />
-          <Hamburger onClick={toggleMobileMenu} isOpen={isMenuOpen} />
+          <Hamburger
+            className="intro__hamburger"
+            onClick={toggleMobileMenu}
+            isOpen={isMenuOpen}
+          />
         </StyledNav>
       </HeaderContainer>
     </StyledHeader>

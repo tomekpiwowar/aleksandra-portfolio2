@@ -15,6 +15,9 @@ const Slider = styled.div`
   &:first-child {
     padding-top: 0;
   }
+  &.active {
+    margin-top: 10vh !important;
+  }
   &.active img {
     margin-left: 0 !important;
     transform: none !important;

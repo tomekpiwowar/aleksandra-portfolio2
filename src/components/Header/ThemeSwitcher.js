@@ -1,11 +1,13 @@
 import React from "react"
 import styled from "styled-components"
+import MoonIcon from "../../assets/images/icons/moon.svg"
+import SunIcon from "../../assets/images/icons/sun.svg"
 
 const SwitchWrapper = styled.label`
   display: inline-block;
   height: 26px;
   position: relative;
-  width: 50px;
+  width: 48px;
   @media (max-width: 1024px) {
     position: absolute;
     left: 20px;
@@ -17,8 +19,7 @@ const SwitchWrapper = styled.label`
 `
 
 const StyledSwitch = styled.div`
-  background-color: ${({ theme }) =>
-    theme.isDark ? theme.black : theme.lightGrey};
+  background-color: ${({ theme }) => (theme.isDark ? theme.black : theme.pink)};
   position: absolute;
   bottom: 0;
   left: 0;
@@ -32,49 +33,49 @@ const StyledSwitch = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5px 0 7px;
+  padding: 0 6px;
   box-shadow: ${({ theme }) =>
     theme.isDark ? "0px 0px 13px 0px #f3f3f354" : null};
   &:before {
     background-color: ${({ theme }) =>
       theme.isDark ? theme.darkGrey : theme.white};
-    bottom: 4px;
     content: "";
-    height: 18px;
-    left: 4px;
+    height: 20px;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
     position: absolute;
     transition: 0.4s;
-    width: 18px;
+    width: 20px;
     border-radius: 50%;
     z-index: 2;
   }
-  span {
-    position: relative;
-    filter: brightness(5);
-    z-index: 1;
-    line-height: 1;
+  svg {
+    width: auto;
   }
-  span:first-child {
-    font-size: 10px;
-    transform: rotate(90deg);
-    position: relative;
-    bottom: 1px;
+  svg:first-child {
+    height: 50%;
+    fill: ${({ theme }) => theme.light};
   }
-  span:nth-child(2) {
-    font-size: 13px;
-    top: 1px;
+  svg:nth-child(2) {
+    height: 60%;
+    fill: ${({ theme }) => theme.primary};
   }
 `
 
 const StyledCheckbox = styled.input`
   display: none;
   &:checked + ${StyledSwitch}:before {
-    transform: translateX(24px);
+    transform: translate(22px, -50%);
   }
 `
 
 const ThemeSwitcher = ({ themeContext, isOpen }) => (
-  <SwitchWrapper htmlFor="checkbox" isOpen={isOpen}>
+  <SwitchWrapper
+    htmlFor="checkbox"
+    isOpen={isOpen}
+    className="intro__theme-switcher"
+  >
     <StyledCheckbox
       type="checkbox"
       id="checkbox"
@@ -82,10 +83,8 @@ const ThemeSwitcher = ({ themeContext, isOpen }) => (
       checked={themeContext.isDark}
     />
     <StyledSwitch>
-      <span role="img" aria-label="moon">
-        🌙
-      </span>
-      <span>☀️</span>
+      <MoonIcon />
+      <SunIcon />
     </StyledSwitch>
   </SwitchWrapper>
 )
