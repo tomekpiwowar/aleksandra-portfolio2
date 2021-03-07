@@ -22,7 +22,7 @@ const StyledHeading = styled.h2`
   //display: flex;
   //justify-content: center;
   //align-items: center;
-  font-size: ${({ theme }) => theme.font.size.xl};
+  font-size: ${({ theme }) => theme.font.size.xxl};
   color: ${({ theme }) => (theme.isDark ? theme.light : theme.primary)};
   img {
     max-width: 45px;

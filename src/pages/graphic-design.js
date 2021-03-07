@@ -28,24 +28,71 @@ const GraphicDesignPage = ({ data }) => {
     //setTimeout(() => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
-    const offers = document.querySelectorAll(".gallery-element")
-    offers.forEach(offer => {
-      gsap.fromTo(
-        offer,
-        { y: "+=50", opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "easeInOut",
-          scrollTrigger: {
-            trigger: offer,
-            start: "top 80%",
-            //end: "bottom",
-          },
-        }
-      )
+
+    const galleryImages = document.querySelectorAll(".gallery-element")
+
+    const numImages = galleryImages.length
+    let numLoaded = 0
+
+    galleryImages.forEach(image => {
+      if (image.complete) {
+        imgLoaded()
+      } else {
+        image.addEventListener("load", imgLoaded)
+      }
     })
+
+    function imgLoaded() {
+      if (++numLoaded === numImages) {
+        initScroller()
+      }
+    }
+
+    function initScroller() {
+      ScrollTrigger.matchMedia({
+        "(min-width: 768px)": function () {
+          galleryImages.forEach(image => {
+            gsap.fromTo(
+              image,
+              { y: "+=50", opacity: 0 },
+              {
+                stagger: 2,
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "easeInOut",
+                scrollTrigger: {
+                  trigger: image,
+                  start: "top 80%",
+                  //end: "bottom",
+                },
+              }
+            )
+          })
+        },
+
+        "(max-width: 767px)": function () {
+          galleryImages.forEach(image => {
+            gsap.fromTo(
+              image,
+              { y: "+=50", opacity: 0 },
+              {
+                stagger: 2,
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "easeInOut",
+                scrollTrigger: {
+                  trigger: image,
+                  start: "top 120%",
+                  //end: "bottom",
+                },
+              }
+            )
+          })
+        },
+      })
+    }
     // }, 500)
   })
 
@@ -80,7 +127,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 800, quality: 100) {
+            fluid(maxWidth: 650, quality: 98) {
               src
               srcSet
               sizes

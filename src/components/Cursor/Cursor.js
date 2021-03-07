@@ -28,14 +28,6 @@ const Cursor = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    // function reportWindowSize() {
-    //   if (window.innerWidth > 1024) {
-    //     console.log("desktop")
-    //   } else {
-    //     console.log("mobile")
-    //   }
-    // }
-
     gsap.set(".cursor", { xPercent: -50, yPercent: -50 })
     const circle = document.querySelector(".cursor")
     let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
@@ -49,7 +41,7 @@ const Cursor = () => {
       mouse.x = e.x
       mouse.y = e.y
 
-      let allHoveredLayers = e.path
+      let allHoveredLayers = e.composedPath()
       let isHoveredLayerLink = allHoveredLayers.filter(layer => {
         return layer.tagName === "A" || layer.tagName === "BUTTON"
       })

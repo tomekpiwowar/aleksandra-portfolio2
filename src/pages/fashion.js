@@ -13,109 +13,107 @@ const SlidersContainer = styled.div`
 
 const FashionPage = ({ data }) => {
   useEffect(() => {
-    setTimeout(() => {
-      gsap.registerPlugin(ScrollTrigger)
-      ScrollTrigger.refresh()
-      //let slider = document.querySelector(".slider")
-      //let sliderImages = document.querySelector(".slider-images")
+    //setTimeout(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.refresh()
 
-      const getSliderImagesTotalWidth = thisSlider => {
-        let totalWidth = 0
-        let sliderImages = [
-          ...document.querySelectorAll(
-            "." + thisSlider.classList[3] + " .slider-images > img"
-          ),
-        ]
-        sliderImages.map(image => {
-          totalWidth += image.offsetWidth
-        })
-        return totalWidth
+    let screenWidth = window.screen.width
+
+    document.querySelectorAll(".slider-container").forEach(sliderContainer => {
+      let slider = sliderContainer.querySelector(".slider")
+
+      let sliderImages = [...slider.querySelectorAll(".slider-images > img")]
+
+      const numImages = sliderImages.length
+      let numLoaded = 0
+
+      sliderImages.forEach(image => {
+        if (image.complete) {
+          imgLoaded()
+        } else {
+          image.addEventListener("load", imgLoaded)
+        }
+        console.log(numLoaded)
+        console.log(numImages)
+      })
+
+      function imgLoaded() {
+        if (++numLoaded === numImages) {
+          initScroller()
+        }
       }
-      //getSliderImagesTotalWidth()
-      //console.log(totalWidth)
 
-      document
-        .querySelectorAll(".slider-container")
-        .forEach(sliderContainer => {
-          const slider = sliderContainer.querySelector(".slider")
-          let screenWidth = window.screen.width
-          const onLeaveFunc = () => {
-            //tl.restart()
-            //tl.pause()
-            tl.progress(0)
-          }
-          // const onEnterBackFunc = () => {
-          //   //tl.pause(0).kill(true)
-          //   //console.log(ScrollTrigger.getById("slider1"))
-          //   //ScrollTrigger.getAll().forEach(st => st.kill())
-          //   //tl.pause(0).kill(true)
-          //   //ScrollTrigger.end = "0"
-          //   //ScrollTrigger.getById("slider1").kill(true)
-          // }
-          const addMarginTopWhileNotAdded = () => {
-            let sliderMarginTop = slider.style.marginTop
-            return sliderMarginTop === "10vh" ? "10vh" : 0
-          }
-          //const modifyLabelStyles = () => {
-          // return (screenWidth <== 1024) ? scale
-          // }
+      //console.log(getSliderImages(slider))
+      function initScroller() {
+        const onLeaveFunc = () => {
+          //tl.restart()
+          //tl.pause()
+          tl.progress(0)
+        }
+        function getSliderImagesTotalWidth() {
+          let totalWidth = 0
+          sliderImages.map(image => {
+            totalWidth += image.offsetWidth
+          })
+          return totalWidth
+        }
+        const addMarginTopWhileNotAdded = () => {
+          let sliderMarginTop = slider.style.marginTop
+          return sliderMarginTop === "10vh" ? "10vh" : 0
+        }
+        //const modifyLabelStyles = () => {
+        // return (screenWidth <== 1024) ? scale
+        // }
 
-          let tl = gsap
-            .timeline({
-              scrollTrigger: {
-                id: "slider1",
-                trigger: slider,
-                start: "top top",
-                //end: "bottom bottom",
-                // end: `+=${
-                //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
-                // }px`,
-                end: "+=300%",
-                pin: slider,
-                //markers: true,
-                scrub: true,
-                toggleClass: "active",
-                //toggleActions: "restart none none reset",
-                //onLeaveBack: () => scrollTrigger.pause(),
-                onLeave: () => onLeaveFunc(),
-                //onEnterBack: () => onEnterBackFunc(),
-              },
-            })
+        let tl = gsap
+          .timeline({
+            scrollTrigger: {
+              id: "slider1",
+              trigger: slider,
+              start: "top top",
+              // end: `+=${
+              //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+              // }px`,
+              end: "+=800%",
+              pin: slider,
+              scrub: true,
+              toggleClass: "active",
+              onLeave: () => onLeaveFunc(),
+              //onEnterBack: () => onEnterBackFunc(),
+            },
+          })
 
-            // .to(slider, {
-            //   duration: 0.25,
-            //   marginTop: "10vh",
-            // })
-            .to(slider, {
-              duration: 0.25,
-              paddingLeft: 0,
-              paddingRight: 0,
-              marginLeft: 0,
-              xPercent: 0,
-            })
-            .to(slider.querySelectorAll(".slider-images img"), {
-              duration: 0.5,
-              ease: "power1",
-              opacity: 1,
-            })
-            .to(slider.querySelector(".slider-label"), {
-              duration: 0.5,
-              scale: () => (screenWidth <= 1024 ? 1 : 1.3),
-            })
-            .to(slider.querySelector(".slider-images"), {
-              duration: 15,
-              x: () =>
-                -(
-                  getSliderImagesTotalWidth(slider) -
-                  document.documentElement.clientWidth
-                ),
-            })
-            .to(slider, {
-              duration: 0.25,
-              marginTop: () => addMarginTopWhileNotAdded(slider),
-            })
-        })
-    }, 500)
+          .to(slider, {
+            duration: 0.25,
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginLeft: 0,
+            xPercent: 0,
+          })
+          .to(slider.querySelectorAll(".slider-images img"), {
+            duration: 0.5,
+            ease: "power1",
+            opacity: 1,
+          })
+          .to(slider.querySelector(".slider-label"), {
+            duration: 0.5,
+            scale: () => (screenWidth <= 1024 ? 1 : 1.3),
+          })
+          .to(slider.querySelector(".slider-images"), {
+            duration: 15,
+            x: () =>
+              -(
+                getSliderImagesTotalWidth() -
+                document.documentElement.clientWidth
+              ),
+          })
+          .to(slider, {
+            duration: 0.25,
+            marginTop: () => addMarginTopWhileNotAdded(slider),
+          })
+      }
+    })
+    //}, 500)
   })
 
   return (
@@ -190,7 +188,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -209,7 +207,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -228,7 +226,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -247,7 +245,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -266,7 +264,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -285,7 +283,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -304,7 +302,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes
@@ -323,7 +321,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 100) {
+            fluid(maxWidth: 1200, quality: 98) {
               src
               srcSet
               sizes

@@ -8,11 +8,13 @@ const SwitchWrapper = styled.label`
   height: 26px;
   position: relative;
   width: 48px;
+  z-index: 1 !important;
+  opacity: 1 !important;
   @media (max-width: 1024px) {
     position: absolute;
     left: 20px;
-    z-index: ${({ isOpen }) => (isOpen ? "1" : "-1")};
-    opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
+    z-index: ${({ isOpen }) => (isOpen ? "1" : "-1 !important")};
+    opacity: ${({ isOpen }) => (isOpen ? "1" : "0 !important")};
     transition: ${({ isOpen }) =>
       isOpen ? "opacity 0.7s 0.5s ease;" : "none"};
   }

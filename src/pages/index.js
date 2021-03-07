@@ -51,6 +51,7 @@ const IndexPage = ({ data }) => {
   useEffect(() => {
     const logo = document.querySelector(".intro__logo")
     const mainNav = document.querySelector(".intro__main-nav")
+    const introHamburger = document.querySelector(".intro__hamburger")
     const themeSwitcher = document.querySelector(".intro__theme-switcher")
     const footer = document.querySelector(".intro__footer")
     //setTimeout(() => {
@@ -62,7 +63,29 @@ const IndexPage = ({ data }) => {
     function initHeader() {
       let tl = gsap.timeline()
       const mainNavEl = mainNav.querySelectorAll("li")
+      let screenWidth = window.screen.width
       gsap.set(mainNav, { autoAlpha: 0 })
+
+      function initNavDesktop() {
+        mainNavEl.forEach((el, i) => {
+          gsap.from(el, {
+            y: -50,
+            opacity: 0,
+            duration: 2,
+            ease: "power4",
+            delay: i * 0.05,
+          })
+        })
+      }
+
+      function initNavMobile() {
+        tl.from(introHamburger, {
+          x: 50,
+          opacity: 0,
+          duration: 1.5,
+          ease: "power4",
+        })
+      }
 
       tl.from(logo, {
         y: -50,
@@ -72,15 +95,7 @@ const IndexPage = ({ data }) => {
       })
         .set(mainNav, { autoAlpha: 1 })
         .add(function () {
-          mainNavEl.forEach((el, i) => {
-            gsap.from(el, {
-              y: -50,
-              opacity: 0,
-              duration: 2,
-              ease: "power4",
-              delay: i * 0.05,
-            })
-          })
+          screenWidth <= 1024 ? initNavMobile() : initNavDesktop()
         })
         .from(themeSwitcher, {
           x: 150,

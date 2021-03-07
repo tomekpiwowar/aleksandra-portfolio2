@@ -93,7 +93,7 @@ const NavigationWrapper = styled.ul`
       }
       @media (max-width: 1024px) {
         display: block;
-        margin: 10px 15px;
+        font-size: ${({ theme }) => theme.font.size.xl};
         opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
         transition: color 0.3s ease, opacity 0.5s 0.3s ease;
       }
@@ -120,10 +120,18 @@ const Header = props => {
 
   const toggleMobileMenu = () => {
     setMenuState(!isMenuOpen)
+    handleScreenOverflow()
   }
 
   const closeMenu = () => {
     isMenuOpen && toggleMobileMenu()
+  }
+
+  const handleScreenOverflow = () => {
+    const bodyEl = document.body
+    isMenuOpen
+      ? (bodyEl.style.overflow = "visible")
+      : (bodyEl.style.overflow = "hidden")
   }
 
   const themeContext = useContext(ThemeManagerContext)

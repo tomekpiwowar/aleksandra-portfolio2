@@ -15,7 +15,8 @@ const theme = {
       s: "1.45rem",
       m: "1.488rem",
       l: "1.6rem",
-      xl: "3rem",
+      xl: "2.5rem",
+      xxl: "3rem",
     },
   },
 }

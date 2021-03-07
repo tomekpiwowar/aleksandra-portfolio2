@@ -3,9 +3,9 @@ import styled from "styled-components"
 
 const StyledDiv = styled.div`
   width: 100%;
-  height: 1px;
+  height: 3px;
   display: block;
-  background: ${({ theme }) => (theme.isDark ? theme.white : theme.grey)};
+  background: ${({ theme }) => theme.pink};
   margin: 0 0 30px;
 `
 
