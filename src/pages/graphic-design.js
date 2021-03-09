@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Container from "../components/Container/Container"
+import { handleLoader } from "../components/Loader/Loader"
 
 const MasonryContainer = styled.div`
   display: block;
@@ -25,8 +26,11 @@ const MasonryContainer = styled.div`
 
 const GraphicDesignPage = ({ data }) => {
   useEffect(() => {
-    //setTimeout(() => {
+    handleLoader.initLoader()
     gsap.registerPlugin(ScrollTrigger)
+
+    //setTimeout(() => {
+
     ScrollTrigger.refresh()
 
     const galleryImages = document.querySelectorAll(".gallery-element")
@@ -44,11 +48,13 @@ const GraphicDesignPage = ({ data }) => {
 
     function imgLoaded() {
       if (++numLoaded === numImages) {
+        handleLoader.disableLoader()
         initScroller()
       }
     }
 
     function initScroller() {
+      gsap.registerPlugin(ScrollTrigger)
       ScrollTrigger.matchMedia({
         "(min-width: 768px)": function () {
           galleryImages.forEach(image => {

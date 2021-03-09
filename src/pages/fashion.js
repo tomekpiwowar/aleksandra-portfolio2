@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import PhotoSlider from "../components/PhotoSlider/PhotoSlider"
+import { handleLoader } from "../components/Loader/Loader"
 
 const SlidersContainer = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const SlidersContainer = styled.div`
 
 const FashionPage = ({ data }) => {
   useEffect(() => {
+    handleLoader.initLoader()
     //setTimeout(() => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
@@ -33,12 +35,13 @@ const FashionPage = ({ data }) => {
         } else {
           image.addEventListener("load", imgLoaded)
         }
-        console.log(numLoaded)
-        console.log(numImages)
+        //console.log(numLoaded)
+        //console.log(numImages)
       })
 
       function imgLoaded() {
         if (++numLoaded === numImages) {
+          handleLoader.disableLoader()
           initScroller()
         }
       }

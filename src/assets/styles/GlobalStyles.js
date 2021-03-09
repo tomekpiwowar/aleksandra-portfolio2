@@ -92,6 +92,13 @@ const GlobalStyle = createGlobalStyle`
         opacity: 0;
       }
     }
+
+    @keyframes bouncing-loader {
+      to {
+        opacity: 0.1;
+        transform: translate3d(0, -1rem, 0);
+      }
+    }
   `
 
 export default GlobalStyle

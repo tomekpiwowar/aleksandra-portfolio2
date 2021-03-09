@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Container from "../components/Container/Container"
 import VideoSection from "../components/VideoSection/VideoSection"
 import Separator from "../components/Separator/Separator"
+import { handleLoader } from "../components/Loader/Loader"
 
 const VideosContainer = styled(Container)`
   flex-direction: column;
@@ -12,7 +13,9 @@ const VideosContainer = styled(Container)`
 `
 
 const VideosPage = () => {
+  handleLoader.initLoader()
   useEffect(() => {
+    handleLoader.disableLoader()
     //setTimeout(() => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()

@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { graphql } from "gatsby"
 import styled from "styled-components"
 import Container from "../components/Container/Container"
 import ContactForm from "../components/ContactForm/ContactForm"
+import { handleLoader } from "../components/Loader/Loader"
 
 const ContactFormContainer = styled(Container)`
   flex-direction: column;
@@ -31,6 +32,9 @@ const StyledHeading = styled.h2`
 `
 
 const ContactPage = ({ data }) => {
+  useEffect(() => {
+    handleLoader.disableLoader()
+  })
   return (
     <ContactFormContainer narrow>
       <StyledHeading>

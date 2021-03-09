@@ -2,6 +2,7 @@ import React from "react"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import Cursor from "../components/Cursor/Cursor"
+import { Loader } from "../components/Loader/Loader"
 import ScrollTopWidget from "../components/ScrollTopWidget/ScrollTopWidget"
 import GlobalStyle from "../assets/styles/GlobalStyles"
 import { ThemeProvider } from "styled-components"
@@ -17,6 +18,7 @@ const MainLayout = ({ children }) => (
       {children}
       <Footer />
       <ScrollTopWidget />
+      <Loader />
       <Cursor />
     </ThemeProvider>
   </>

@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Container from "../components/Container/Container"
+import { handleLoader } from "../components/Loader/Loader"
 import ThemeSwitcher from "../components/Header/ThemeSwitcher"
 
 const HeroContainer = styled(Container)`
@@ -45,8 +46,9 @@ const HeroContainer = styled(Container)`
 `
 
 const IndexPage = ({ data }) => {
+  handleLoader.initLoader()
   const stage = document.querySelector("#___gatsby")
-  !stage.classList.contains("initialized") && gsap.set(stage, { autoAlpha: 0 })
+  //!stage.classList.contains("initialized") && gsap.set(stage, { autoAlpha: 0 })
 
   useEffect(() => {
     const logo = document.querySelector(".intro__logo")
@@ -143,7 +145,8 @@ const IndexPage = ({ data }) => {
     }
 
     function init() {
-      gsap.set(stage, { autoAlpha: 1 })
+      //gsap.set(stage, { autoAlpha: 1 })
+      handleLoader.disableLoader()
       initIntro()
       initHeader()
       initFooter()
