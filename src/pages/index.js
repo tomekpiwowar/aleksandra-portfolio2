@@ -51,6 +51,7 @@ const IndexPage = ({ data }) => {
   //!stage.classList.contains("initialized") && gsap.set(stage, { autoAlpha: 0 })
 
   useEffect(() => {
+    handleLoader.disableLoader()
     const logo = document.querySelector(".intro__logo")
     const mainNav = document.querySelector(".intro__main-nav")
     const introHamburger = document.querySelector(".intro__hamburger")
@@ -146,7 +147,6 @@ const IndexPage = ({ data }) => {
 
     function init() {
       //gsap.set(stage, { autoAlpha: 1 })
-      handleLoader.disableLoader()
       initIntro()
       initHeader()
       initFooter()

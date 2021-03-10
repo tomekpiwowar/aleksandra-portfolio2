@@ -28,7 +28,7 @@ const Cursor = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    gsap.set(".cursor", { xPercent: -50, yPercent: -50 })
+    gsap.set(".cursor", { xPercent: -50, yPercent: -50, autoAlpha: 0 })
     const circle = document.querySelector(".cursor")
     let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
     let mouse = { x: pos.x, y: pos.y }
@@ -68,14 +68,36 @@ const Cursor = () => {
       ySet(pos.y)
     })
 
+    const initAnimation = () => {
+      gsap.set(".cursor", {
+        autoAlpha: 1,
+        duration: 1,
+        delay: 2,
+      })
+    }
+
     ScrollTrigger.matchMedia({
       "(min-width: 1025px)": () => {
         circle.style.display = "block"
         window.addEventListener("mousemove", mouseMoveHandler, true)
+        window.addEventListener(
+          "mousemove",
+          function () {
+            initAnimation()
+          },
+          { once: true }
+        )
       },
       "(max-width: 1024px)": () => {
         circle.style.display = "none"
         window.removeEventListener("mousemove", mouseMoveHandler, true)
+        window.addEventListener(
+          "mousemove",
+          function () {
+            initAnimation()
+          },
+          { once: true }
+        )
       },
     })
   })
