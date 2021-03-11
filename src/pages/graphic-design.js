@@ -25,8 +25,8 @@ const MasonryContainer = styled.div`
 `
 
 const GraphicDesignPage = ({ data }) => {
+  handleLoader.initLoader()
   useEffect(() => {
-    handleLoader.initLoader()
     gsap.registerPlugin(ScrollTrigger)
 
     //setTimeout(() => {

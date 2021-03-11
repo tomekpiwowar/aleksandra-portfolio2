@@ -150,17 +150,17 @@ const Header = props => {
               </Link>
             </li>
             <li>
-              <Link to="/fashion" activeClassName="active" onClick={closeMenu}>
-                Fashion
-              </Link>
-            </li>
-            <li>
               <Link
                 to="/graphic-design"
                 activeClassName="active"
                 onClick={closeMenu}
               >
                 Graphic design
+              </Link>
+            </li>
+            <li>
+              <Link to="/fashion" activeClassName="active" onClick={closeMenu}>
+                Fashion
               </Link>
             </li>
             <li>

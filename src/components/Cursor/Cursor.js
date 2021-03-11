@@ -70,7 +70,7 @@ const Cursor = () => {
 
     const initAnimation = () => {
       gsap.set(".cursor", {
-        autoAlpha: 1,
+        autoAlpha: 0.5,
         duration: 1,
         delay: 2,
       })

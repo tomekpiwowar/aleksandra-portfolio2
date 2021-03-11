@@ -31,23 +31,33 @@ const FashionPage = ({ data }) => {
 
       sliderImages.forEach(image => {
         if (image.complete) {
+          //ScrollTrigger.refresh()
           imgLoaded()
         } else {
+          //ScrollTrigger.refresh()
           image.addEventListener("load", imgLoaded)
         }
-        //console.log(numLoaded)
-        //console.log(numImages)
+        console.log(numLoaded)
+        console.log(numImages)
       })
 
       function imgLoaded() {
         if (++numLoaded === numImages) {
-          handleLoader.disableLoader()
           initScroller()
         }
       }
 
+      gatsbyCacheFix()
+
+      function gatsbyCacheFix() {
+        setTimeout(() => {
+          numLoaded === 0 && initScroller()
+        }, 2000)
+      }
+
       //console.log(getSliderImages(slider))
       function initScroller() {
+        handleLoader.disableLoader()
         const onLeaveFunc = () => {
           //tl.restart()
           //tl.pause()
@@ -81,6 +91,7 @@ const FashionPage = ({ data }) => {
               pin: slider,
               scrub: true,
               toggleClass: "active",
+              invalidateOnRefresh: true,
               onLeave: () => onLeaveFunc(),
               //onEnterBack: () => onEnterBackFunc(),
             },

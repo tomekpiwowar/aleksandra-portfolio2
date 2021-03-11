@@ -32,6 +32,7 @@ const StyledHeading = styled.h2`
 `
 
 const ContactPage = ({ data }) => {
+  handleLoader.initLoader()
   useEffect(() => {
     handleLoader.disableLoader()
   })
