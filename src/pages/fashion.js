@@ -13,8 +13,8 @@ const SlidersContainer = styled.div`
 `
 
 const FashionPage = ({ data }) => {
-  handleLoader.initLoader()
   useEffect(() => {
+    handleLoader.initLoader()
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
 
@@ -42,7 +42,7 @@ const FashionPage = ({ data }) => {
         if (++numLoadedimages === numImages) {
           console.log("initScroller")
           initScroller()
-          ++numLoadedSliders === numSliders && handleLoader.disableLoader()
+          //++numLoadedSliders === numSliders && handleLoader.disableLoader()
         }
       }
 

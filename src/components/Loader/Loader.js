@@ -40,6 +40,7 @@ export const handleLoader = {
   initLoader: () => {
     if (document.querySelector(".loader")) {
       gsap.set(".loader", { autoAlpha: 1, display: "grid" })
+      gsap.set("body", { overflowY: "hidden" })
     }
   },
 
@@ -56,6 +57,7 @@ export const handleLoader = {
         duration: 1.5,
         ease: "power4",
       })
+      gsap.set("body", { overflowY: "auto" })
     }
   },
 }
