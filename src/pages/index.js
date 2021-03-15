@@ -46,7 +46,6 @@ const HeroContainer = styled(Container)`
 `
 
 const IndexPage = ({ data }) => {
-  handleLoader.initLoader()
   const stage = document.querySelector("#___gatsby")
   //!stage.classList.contains("initialized") && gsap.set(stage, { autoAlpha: 0 })
 

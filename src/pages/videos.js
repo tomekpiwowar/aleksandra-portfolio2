@@ -13,7 +13,6 @@ const VideosContainer = styled(Container)`
 `
 
 const VideosPage = () => {
-  handleLoader.initLoader()
   useEffect(() => {
     handleLoader.disableLoader()
     //setTimeout(() => {
