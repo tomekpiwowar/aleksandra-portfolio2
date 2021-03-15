@@ -13,13 +13,14 @@ const SlidersContainer = styled.div`
 `
 
 const FashionPage = ({ data }) => {
+  handleLoader.initLoader()
   useEffect(() => {
-    handleLoader.initLoader()
-    //setTimeout(() => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
 
     let screenWidth = window.screen.width
+    const numSliders = [...document.querySelectorAll(".slider")].length
+    let numLoadedSliders = 0
 
     document.querySelectorAll(".slider-container").forEach(sliderContainer => {
       let slider = sliderContainer.querySelector(".slider")
@@ -27,37 +28,35 @@ const FashionPage = ({ data }) => {
       let sliderImages = [...slider.querySelectorAll(".slider-images > img")]
 
       const numImages = sliderImages.length
-      let numLoaded = 0
+      let numLoadedimages = 0
 
       sliderImages.forEach(image => {
         if (image.complete) {
-          //ScrollTrigger.refresh()
           imgLoaded()
         } else {
-          //ScrollTrigger.refresh()
           image.addEventListener("load", imgLoaded)
         }
-        console.log(numLoaded)
-        console.log(numImages)
       })
 
       function imgLoaded() {
-        if (++numLoaded === numImages) {
+        if (++numLoadedimages === numImages) {
+          console.log("initScroller")
           initScroller()
+          ++numLoadedSliders === numSliders && handleLoader.disableLoader()
         }
       }
 
-      gatsbyCacheFix()
+      // gatsbyCacheFix()
 
-      function gatsbyCacheFix() {
-        setTimeout(() => {
-          numLoaded === 0 && initScroller()
-        }, 2000)
-      }
+      // function gatsbyCacheFix() {
+      //   setTimeout(() => {
+      //     numLoaded === 0 && initScroller()
+      //     console.log("init")
+      //   }, 5000)
+      // }
 
       //console.log(getSliderImages(slider))
       function initScroller() {
-        handleLoader.disableLoader()
         const onLeaveFunc = () => {
           //tl.restart()
           //tl.pause()
@@ -127,7 +126,6 @@ const FashionPage = ({ data }) => {
           })
       }
     })
-    //}, 500)
   })
 
   return (
