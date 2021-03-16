@@ -77,7 +77,7 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
-  title: `Aleksandra Kiszka - Portfolio`,
+  title: `Aleksandra - Portfolio`,
 }
 
 SEO.propTypes = {

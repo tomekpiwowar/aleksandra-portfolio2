@@ -24,7 +24,7 @@ const Footer = () => (
   <StyledFooter className="intro__footer">
     <FooterContainer>
       <p>
-        © 2009 - {new Date().getFullYear()} Aleksandra Kiszka Studio. All rights
+        © 2009 - {new Date().getFullYear()} Aleksandra - Portfolio. All rights
         reserved{" "}
         <span role="img" aria-label="rainbow">
           🌈

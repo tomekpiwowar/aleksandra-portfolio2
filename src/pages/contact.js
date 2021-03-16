@@ -39,7 +39,11 @@ const ContactPage = ({ data }) => {
     <ContactFormContainer narrow>
       <StyledHeading>
         Contact Me
-        <img src={data.icon.childImageSharp.fluid.src} alt="Girl Hi! icon" />
+        <img
+          src={data.icon.childImageSharp.fluid.src}
+          alt="Girl say Hi! icon"
+          title="Email me!"
+        />
       </StyledHeading>
       <ContactForm />
     </ContactFormContainer>
@@ -48,7 +52,7 @@ const ContactPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    icon: file(name: { eq: "favicon" }) {
+    icon: file(name: { eq: "icon" }) {
       childImageSharp {
         fluid(maxWidth: 100, quality: 100) {
           src

@@ -61,7 +61,6 @@ const ScrollTopWidget = () => {
     let targetScroll = window.innerHeight
 
     function toggleButtonVisibility() {
-      //console.log(this)
       const scrollY = this.pageYOffset
 
       if (scrollY > targetScroll) {

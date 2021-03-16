@@ -109,6 +109,7 @@ const GraphicDesignPage = ({ data }) => {
             <img
               className="gallery-element"
               key={i}
+              alt="Portfolio gallery pic"
               src={node.childImageSharp.fluid.src}
               srcSet={node.childImageSharp.fluid.srcSrt}
               sizes={node.childImageSharp.fluid.sizes}

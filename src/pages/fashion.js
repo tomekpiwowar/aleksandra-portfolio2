@@ -39,7 +39,6 @@ const FashionPage = ({ data }) => {
 
       function imgLoaded() {
         if (++numLoadedimages === numImages) {
-          console.log("initScroller")
           initScroller()
           ++numLoadedSliders === numSliders && handleLoader.disableLoader()
         }
@@ -63,7 +62,7 @@ const FashionPage = ({ data }) => {
         }
         function getSliderImagesTotalWidth() {
           let totalWidth = 0
-          sliderImages.map(image => {
+          sliderImages.forEach(image => {
             totalWidth += image.offsetWidth
           })
           return totalWidth

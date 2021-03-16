@@ -140,7 +140,7 @@ const Header = props => {
     <StyledHeader>
       <HeaderContainer>
         <Logo className="intro__logo">
-          <Link to="/">Aleksandra Kiszka</Link>
+          <Link to="/">Aleksandra Portfolio</Link>
         </Logo>
         <StyledNav className="intro__main-nav">
           <NavigationWrapper isOpen={isMenuOpen}>
