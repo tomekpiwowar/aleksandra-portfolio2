@@ -52,7 +52,7 @@ const ContactPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    icon: file(name: { eq: "icon-hi" }) {
+    icon: file(name: { eq: "icon" }) {
       childImageSharp {
         fluid(maxWidth: 100, quality: 100) {
           src
