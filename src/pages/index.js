@@ -9,15 +9,19 @@ import { handleLoader } from "../components/Loader/Loader"
 const HeroContainer = styled(Container)`
   height: calc(100vh - (86px + 80px));
   justify-content: center;
+  align-items: center;
   //display: grid;
   //grid-template-columns: 52% 43.5%;
   //justify-content: space-between;
   div.hero-images-wrapper {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 100%;
 
     img {
+      height: 100%;
       width: auto;
       @media (max-width: 768px) {
         max-width: 65vw;
@@ -29,14 +33,11 @@ const HeroContainer = styled(Container)`
       padding: 30px 0 30px 30px;
       @media (max-width: 768px) {
         align-self: flex-end;
-        position: relative;
-        top: -15%;
-        margin-bottom: -28%;
+        margin-top: -15%;
       }
     }
     @media (max-width: 768px) {
       flex-direction: column;
-      align-items: space-between;
     }
   }
   @media (max-width: 768px) {
