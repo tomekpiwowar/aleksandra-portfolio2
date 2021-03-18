@@ -31,8 +31,10 @@ const FashionPage = ({ data }) => {
 
       sliderImages.forEach(image => {
         if (image.complete) {
+          ScrollTrigger.refresh()
           imgLoaded()
         } else {
+          ScrollTrigger.refresh()
           image.addEventListener("load", imgLoaded)
         }
       })
