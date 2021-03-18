@@ -78,9 +78,9 @@ const PhotoSlider = ({ graphQlData, sliderName, sliderLabel }) => {
               className="slider-element"
               key={i}
               src={node.childImageSharp.fluid.src}
-              srcSet={node.childImageSharp.fluid.srcSrt}
-              sizes={node.childImageSharp.fluid.sizes}
-              //loading="eager"
+              //srcSet={node.childImageSharp.fluid.srcSrt}
+              //sizes={node.childImageSharp.fluid.sizes}
+              loading="eager"
             />
           ))}
         </SliderImages>
