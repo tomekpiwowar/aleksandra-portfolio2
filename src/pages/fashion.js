@@ -198,7 +198,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -217,7 +217,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -236,7 +236,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -255,7 +255,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -274,7 +274,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -293,7 +293,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -312,7 +312,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
@@ -331,7 +331,7 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            fluid(maxWidth: 1200, quality: 98) {
+            fluid(maxWidth: 1200, quality: 80) {
               src
               srcSet
               sizes
