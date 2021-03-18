@@ -58,6 +58,7 @@ export const handleLoader = {
         ease: "power4",
       })
       gsap.set("body", { overflowY: "auto" })
+      console.log("done")
     }
   },
 }
