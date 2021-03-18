@@ -122,7 +122,6 @@ const FashionPage = ({ data }) => {
             duration: 0.25,
             marginTop: () => addMarginTopWhileNotAdded(slider),
           })
-        ScrollTrigger.refresh()
       }
     })
   })
@@ -196,16 +195,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider2: allFile(
@@ -215,16 +206,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider3: allFile(
@@ -234,16 +217,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider4: allFile(
@@ -253,16 +228,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider5: allFile(
@@ -272,16 +239,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider6: allFile(
@@ -291,16 +250,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider7: allFile(
@@ -310,16 +261,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
     slider8: allFile(
@@ -329,16 +272,8 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            fluid(maxWidth: 1200, quality: 80) {
-              src
-              srcSet
-              sizes
-            }
-          }
-        }
+      nodes {
+        publicURL
       }
     }
   }

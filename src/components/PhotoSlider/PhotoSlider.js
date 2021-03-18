@@ -73,14 +73,14 @@ const PhotoSlider = ({ graphQlData, sliderName, sliderLabel }) => {
     <div className="slider-container">
       <Slider className={`slider ${generateClass("slider")}`}>
         <SliderImages className="slider-images">
-          {graphQlData[sliderName].edges.map(({ node }, i) => (
+          {graphQlData[sliderName].nodes.map((node, i) => (
             <StyledImg
               className="slider-element"
               key={i}
-              src={node.childImageSharp.fluid.src}
+              src={node.publicURL}
               //srcSet={node.childImageSharp.fluid.srcSrt}
               //sizes={node.childImageSharp.fluid.sizes}
-              loading="eager"
+              //loading="eager"
             />
           ))}
         </SliderImages>
