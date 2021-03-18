@@ -24,6 +24,8 @@ const HeroContainer = styled(Container)`
       height: 100%;
       width: auto;
       @media (max-width: 768px) {
+        height: auto;
+        width: 100%;
         max-width: 65vw;
         padding: 0 !important;
         align-self: flex-start;

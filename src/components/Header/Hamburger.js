@@ -7,7 +7,7 @@ const StyledHamburger = styled.button`
   border: none;
   background: transparent;
   position: relative;
-  z-index: 99999;
+  z-index: 2;
 
   @media (max-width: 1024px) {
     display: block;
