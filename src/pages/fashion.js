@@ -30,6 +30,7 @@ const FashionPage = ({ data }) => {
           let sliderImages = [
             ...slider.querySelectorAll(".slider-images > img"),
           ]
+          let totalWidth
 
           const numImages = sliderImages.length
           let numLoadedimages = 0
@@ -46,9 +47,16 @@ const FashionPage = ({ data }) => {
             //console.log(numLoadedimages)
             //console.log(numImages)
             if (++numLoadedimages === numImages) {
+              getSliderImagesTotalWidth()
               initScroller()
               ++numLoadedSliders === numSliders && handleLoader.disableLoader()
             }
+          }
+
+          function getSliderImagesTotalWidth() {
+            sliderImages.forEach(image => {
+              totalWidth += image.offsetWidth
+            })
           }
 
           // gatsbyCacheFix()
@@ -67,14 +75,7 @@ const FashionPage = ({ data }) => {
               //tl.pause()
               tl.progress(0)
             }
-            function getSliderImagesTotalWidth() {
-              let totalWidth = 0
-              sliderImages.forEach(image => {
-                totalWidth += image.offsetWidth
-              })
-              console.log(totalWidth)
-              return totalWidth
-            }
+
             const addMarginTopWhileNotAdded = () => {
               let sliderMarginTop = slider.style.marginTop
               return sliderMarginTop === "10vh" ? "10vh" : 0
@@ -120,11 +121,7 @@ const FashionPage = ({ data }) => {
               })
               .to(slider.querySelector(".slider-images"), {
                 duration: 15,
-                x: () =>
-                  -(
-                    getSliderImagesTotalWidth() -
-                    document.documentElement.clientWidth
-                  ),
+                x: () => -(totalWidth - document.documentElement.clientWidth),
               })
               .to(slider, {
                 duration: 0.25,
