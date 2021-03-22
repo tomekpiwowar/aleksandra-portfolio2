@@ -17,113 +17,122 @@ const FashionPage = ({ data }) => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
 
-    let screenWidth = window.screen.width
-    const numSliders = [...document.querySelectorAll(".slider")].length
-    let numLoadedSliders = 0
+    setTimeout(() => {
+      let screenWidth = window.screen.width
+      const numSliders = [...document.querySelectorAll(".slider")].length
+      let numLoadedSliders = 0
 
-    document.querySelectorAll(".slider-container").forEach(sliderContainer => {
-      let slider = sliderContainer.querySelector(".slider")
+      document
+        .querySelectorAll(".slider-container")
+        .forEach(sliderContainer => {
+          let slider = sliderContainer.querySelector(".slider")
 
-      let sliderImages = [...slider.querySelectorAll(".slider-images > img")]
+          let sliderImages = [
+            ...slider.querySelectorAll(".slider-images > img"),
+          ]
 
-      const numImages = sliderImages.length
-      let numLoadedimages = 0
+          const numImages = sliderImages.length
+          let numLoadedimages = 0
 
-      sliderImages.forEach(image => {
-        if (image.complete) {
-          imgLoaded()
-        } else {
-          image.addEventListener("load", imgLoaded)
-        }
-      })
-
-      function imgLoaded() {
-        if (++numLoadedimages === numImages) {
-          initScroller()
-          ++numLoadedSliders === numSliders && handleLoader.disableLoader()
-        }
-      }
-
-      // gatsbyCacheFix()
-
-      // function gatsbyCacheFix() {
-      //   setTimeout(() => {
-      //     numLoaded === 0 && initScroller()
-      //     console.log("init")
-      //   }, 5000)
-      // }
-
-      //console.log(getSliderImages(slider))
-      function initScroller() {
-        const onLeaveFunc = () => {
-          //tl.restart()
-          //tl.pause()
-          tl.progress(0)
-        }
-        function getSliderImagesTotalWidth() {
-          let totalWidth = 0
           sliderImages.forEach(image => {
-            totalWidth += image.offsetWidth
-          })
-          return totalWidth
-        }
-        const addMarginTopWhileNotAdded = () => {
-          let sliderMarginTop = slider.style.marginTop
-          return sliderMarginTop === "10vh" ? "10vh" : 0
-        }
-        //const modifyLabelStyles = () => {
-        // return (screenWidth <== 1024) ? scale
-        // }
-
-        let tl = gsap
-          .timeline({
-            scrollTrigger: {
-              id: "slider1",
-              trigger: slider,
-              start: "top top",
-              // end: `+=${
-              //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
-              // }px`,
-              end: "+=800%",
-              pin: slider,
-              scrub: true,
-              toggleClass: "active",
-              invalidateOnRefresh: true,
-              onLeave: () => onLeaveFunc(),
-              //onEnterBack: () => onEnterBackFunc(),
-            },
+            if (image.complete) {
+              imgLoaded()
+            } else {
+              image.addEventListener("load", imgLoaded)
+            }
           })
 
-          .to(slider, {
-            duration: 0.25,
-            paddingLeft: 0,
-            paddingRight: 0,
-            marginLeft: 0,
-            xPercent: 0,
-          })
-          .to(slider.querySelectorAll(".slider-images img"), {
-            duration: 0.5,
-            ease: "power1",
-            opacity: 1,
-          })
-          .to(slider.querySelector(".slider-label"), {
-            duration: 0.5,
-            scale: () => (screenWidth <= 1024 ? 1 : 1.3),
-          })
-          .to(slider.querySelector(".slider-images"), {
-            duration: 15,
-            x: () =>
-              -(
-                getSliderImagesTotalWidth() -
-                document.documentElement.clientWidth
-              ),
-          })
-          .to(slider, {
-            duration: 0.25,
-            marginTop: () => addMarginTopWhileNotAdded(slider),
-          })
-      }
-    })
+          function imgLoaded() {
+            //console.log(numLoadedimages)
+            //console.log(numImages)
+            if (++numLoadedimages === numImages) {
+              initScroller()
+              ++numLoadedSliders === numSliders && handleLoader.disableLoader()
+            }
+          }
+
+          // gatsbyCacheFix()
+
+          // function gatsbyCacheFix() {
+          //   setTimeout(() => {
+          //     numLoaded === 0 && initScroller()
+          //     console.log("init")
+          //   }, 5000)
+          // }
+
+          //console.log(getSliderImages(slider))
+          function initScroller() {
+            const onLeaveFunc = () => {
+              //tl.restart()
+              //tl.pause()
+              tl.progress(0)
+            }
+            function getSliderImagesTotalWidth() {
+              let totalWidth = 0
+              sliderImages.forEach(image => {
+                totalWidth += image.offsetWidth
+              })
+              console.log(totalWidth)
+              return totalWidth
+            }
+            const addMarginTopWhileNotAdded = () => {
+              let sliderMarginTop = slider.style.marginTop
+              return sliderMarginTop === "10vh" ? "10vh" : 0
+            }
+            //const modifyLabelStyles = () => {
+            // return (screenWidth <== 1024) ? scale
+            // }
+
+            let tl = gsap
+              .timeline({
+                scrollTrigger: {
+                  id: "slider1",
+                  trigger: slider,
+                  start: "top top",
+                  // end: `+=${
+                  //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+                  // }px`,
+                  end: "+=800%",
+                  pin: slider,
+                  scrub: true,
+                  toggleClass: "active",
+                  invalidateOnRefresh: true,
+                  onLeave: () => onLeaveFunc(),
+                  //onEnterBack: () => onEnterBackFunc(),
+                },
+              })
+
+              .to(slider, {
+                duration: 0.25,
+                paddingLeft: 0,
+                paddingRight: 0,
+                marginLeft: 0,
+                xPercent: 0,
+              })
+              .to(slider.querySelectorAll(".slider-images img"), {
+                duration: 0.5,
+                ease: "power1",
+                opacity: 1,
+              })
+              .to(slider.querySelector(".slider-label"), {
+                duration: 0.5,
+                scale: () => (screenWidth <= 1024 ? 1 : 1.3),
+              })
+              .to(slider.querySelector(".slider-images"), {
+                duration: 15,
+                x: () =>
+                  -(
+                    getSliderImagesTotalWidth() -
+                    document.documentElement.clientWidth
+                  ),
+              })
+              .to(slider, {
+                duration: 0.25,
+                marginTop: () => addMarginTopWhileNotAdded(slider),
+              })
+          }
+        })
+    }, 3000)
   })
 
   return (
@@ -195,8 +204,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider2: allFile(
@@ -206,8 +223,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider3: allFile(
@@ -217,8 +242,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider4: allFile(
@@ -228,8 +261,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider5: allFile(
@@ -239,8 +280,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider6: allFile(
@@ -250,8 +299,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider7: allFile(
@@ -261,8 +318,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
     slider8: allFile(
@@ -272,8 +337,16 @@ export const query = graphql`
       }
       sort: { fields: name, order: ASC }
     ) {
-      nodes {
-        publicURL
+      edges {
+        node {
+          childImageSharp {
+            fluid(maxWidth: 1200, quality: 80) {
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
       }
     }
   }
