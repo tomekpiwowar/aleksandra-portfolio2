@@ -115,17 +115,21 @@ const FashionPage = ({ data }) => {
                 duration: 0.5,
                 ease: "power1",
                 opacity: 1,
+                overwrite: true,
               })
               .to(slider.querySelector(".slider-label"), {
                 duration: 0.5,
+                overwrite: true,
                 scale: () => (screenWidth <= 1024 ? 1 : 1.3),
               })
               .to(slider.querySelector(".slider-images"), {
-                duration: 15,
+                duration: 1,
+                overwrite: true,
                 x: () => -(totalWidth - document.documentElement.clientWidth),
               })
               .to(slider, {
                 duration: 0.25,
+                overwrite: true,
                 marginTop: () => addMarginTopWhileNotAdded(slider),
               })
           }
