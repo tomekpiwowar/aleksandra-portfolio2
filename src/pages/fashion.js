@@ -30,7 +30,7 @@ const FashionPage = ({ data }) => {
           let sliderImages = [
             ...slider.querySelectorAll(".slider-images > img"),
           ]
-          let totalWidth
+          let totalWidth = 0
 
           const numImages = sliderImages.length
           let numLoadedimages = 0
@@ -57,6 +57,7 @@ const FashionPage = ({ data }) => {
             sliderImages.forEach(image => {
               totalWidth += image.offsetWidth
             })
+            console.log(totalWidth)
           }
 
           // gatsbyCacheFix()
