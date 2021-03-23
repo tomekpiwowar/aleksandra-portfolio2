@@ -17,124 +17,122 @@ const FashionPage = ({ data }) => {
     gsap.registerPlugin(ScrollTrigger)
     ScrollTrigger.refresh()
 
-    setTimeout(() => {
-      let screenWidth = window.screen.width
-      const numSliders = [...document.querySelectorAll(".slider")].length
-      let numLoadedSliders = 0
+    //setTimeout(() => {
+    let screenWidth = window.screen.width
+    const numSliders = [...document.querySelectorAll(".slider")].length
+    let numLoadedSliders = 0
 
-      document
-        .querySelectorAll(".slider-container")
-        .forEach(sliderContainer => {
-          let slider = sliderContainer.querySelector(".slider")
+    document.querySelectorAll(".slider-container").forEach(sliderContainer => {
+      let slider = sliderContainer.querySelector(".slider")
 
-          let sliderImages = [
-            ...slider.querySelectorAll(".slider-images > img"),
-          ]
-          let totalWidth = 0
+      let sliderImages = [...slider.querySelectorAll(".slider-images > img")]
+      let totalWidth = 0
 
-          const numImages = sliderImages.length
-          let numLoadedimages = 0
+      const numImages = sliderImages.length
+      let numLoadedimages = 0
 
-          sliderImages.forEach(image => {
-            if (image.complete) {
-              imgLoaded()
-            } else {
-              image.addEventListener("load", imgLoaded)
-            }
+      sliderImages.forEach(image => {
+        if (image.loaded) {
+          imgLoaded()
+        } else {
+          image.addEventListener("load", imgLoaded)
+        }
+      })
+
+      //images.forEach(img => img.loaded ? count++ : null);
+
+      function imgLoaded() {
+        //console.log(numLoadedimages)
+        //console.log(numImages)
+        if (++numLoadedimages === numImages) {
+          getSliderImagesTotalWidth()
+          initScroller()
+          ++numLoadedSliders === numSliders && handleLoader.disableLoader()
+        }
+      }
+
+      function getSliderImagesTotalWidth() {
+        sliderImages.forEach(image => {
+          totalWidth += image.offsetWidth
+        })
+        console.log(totalWidth)
+      }
+
+      // gatsbyCacheFix()
+
+      // function gatsbyCacheFix() {
+      //   setTimeout(() => {
+      //     numLoaded === 0 && initScroller()
+      //     console.log("init")
+      //   }, 5000)
+      // }
+
+      //console.log(getSliderImages(slider))
+      function initScroller() {
+        const onLeaveFunc = () => {
+          //tl.restart()
+          //tl.pause()
+          tl.progress(0)
+        }
+
+        const addMarginTopWhileNotAdded = () => {
+          let sliderMarginTop = slider.style.marginTop
+          return sliderMarginTop === "10vh" ? "10vh" : 0
+        }
+        //const modifyLabelStyles = () => {
+        // return (screenWidth <== 1024) ? scale
+        // }
+
+        let tl = gsap
+          .timeline({
+            scrollTrigger: {
+              id: "slider1",
+              trigger: slider,
+              start: "top top",
+              // end: `+=${
+              //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+              // }px`,
+              end: "+=900%",
+              pin: slider,
+              scrub: true,
+              toggleClass: "active",
+              invalidateOnRefresh: true,
+              onLeave: () => onLeaveFunc(),
+              //onEnterBack: () => onEnterBackFunc(),
+            },
           })
 
-          function imgLoaded() {
-            //console.log(numLoadedimages)
-            //console.log(numImages)
-            if (++numLoadedimages === numImages) {
-              getSliderImagesTotalWidth()
-              initScroller()
-              ++numLoadedSliders === numSliders && handleLoader.disableLoader()
-            }
-          }
-
-          function getSliderImagesTotalWidth() {
-            sliderImages.forEach(image => {
-              totalWidth += image.offsetWidth
-            })
-            console.log(totalWidth)
-          }
-
-          // gatsbyCacheFix()
-
-          // function gatsbyCacheFix() {
-          //   setTimeout(() => {
-          //     numLoaded === 0 && initScroller()
-          //     console.log("init")
-          //   }, 5000)
-          // }
-
-          //console.log(getSliderImages(slider))
-          function initScroller() {
-            const onLeaveFunc = () => {
-              //tl.restart()
-              //tl.pause()
-              tl.progress(0)
-            }
-
-            const addMarginTopWhileNotAdded = () => {
-              let sliderMarginTop = slider.style.marginTop
-              return sliderMarginTop === "10vh" ? "10vh" : 0
-            }
-            //const modifyLabelStyles = () => {
-            // return (screenWidth <== 1024) ? scale
-            // }
-
-            let tl = gsap
-              .timeline({
-                scrollTrigger: {
-                  id: "slider1",
-                  trigger: slider,
-                  start: "top top",
-                  // end: `+=${
-                  //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
-                  // }px`,
-                  end: "+=800%",
-                  pin: slider,
-                  scrub: true,
-                  toggleClass: "active",
-                  invalidateOnRefresh: true,
-                  onLeave: () => onLeaveFunc(),
-                  //onEnterBack: () => onEnterBackFunc(),
-                },
-              })
-
-              .to(slider, {
-                duration: 0.25,
-                paddingLeft: 0,
-                paddingRight: 0,
-                marginLeft: 0,
-                xPercent: 0,
-              })
-              .to(slider.querySelectorAll(".slider-images img"), {
-                duration: 0.5,
-                ease: "power1",
-                opacity: 1,
-                overwrite: true,
-              })
-              .to(slider.querySelector(".slider-label"), {
-                duration: 0.5,
-                overwrite: true,
-                scale: () => (screenWidth <= 1024 ? 1 : 1.3),
-              })
-              .to(slider.querySelector(".slider-images"), {
-                duration: 1,
-                overwrite: true,
-                x: () => -(totalWidth - document.documentElement.clientWidth),
-              })
-              .to(slider, {
-                duration: 0.25,
-                overwrite: true,
-                marginTop: () => addMarginTopWhileNotAdded(slider),
-              })
-          }
-        })
-    }, 3000)
+          .to(slider, {
+            duration: 0.25,
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginLeft: 0,
+            xPercent: 0,
+          })
+          .to(slider.querySelectorAll(".slider-images img"), {
+            duration: 0.2,
+            //ease: "power1",
+            opacity: 1,
+            //overwrite: true,
+          })
+          .to(slider.querySelector(".slider-label"), {
+            duration: 0.2,
+            //overwrite: true,
+            scale: () => (screenWidth <= 1024 ? 1 : 1.3),
+          })
+          .to(slider.querySelector(".slider-images"), {
+            duration: 1,
+            //overwrite: true,
+            x: () => -(totalWidth - document.documentElement.clientWidth),
+          })
+          .to(slider, {
+            duration: 0.25,
+            //overwrite: true,
+            marginTop: () => addMarginTopWhileNotAdded(slider),
+          })
+      }
+    })
+    //}, 3000)
   })
 
   return (
