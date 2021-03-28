@@ -19,6 +19,7 @@ const FashionPage = ({ data }) => {
 
     //setTimeout(() => {
     let screenWidth = window.screen.width
+    let index = 0
     const numSliders = [...document.querySelectorAll(".slider")].length
     let numLoadedSliders = 0
 
@@ -26,36 +27,25 @@ const FashionPage = ({ data }) => {
       let slider = sliderContainer.querySelector(".slider")
 
       let sliderImages = [...slider.querySelectorAll(".slider-images > img")]
-      let totalWidth = 0
 
       const numImages = sliderImages.length
       let numLoadedimages = 0
 
       sliderImages.forEach(image => {
-        if (image.loaded) {
+        if (image.complete) {
           imgLoaded()
         } else {
           image.addEventListener("load", imgLoaded)
         }
       })
 
-      //images.forEach(img => img.loaded ? count++ : null);
-
       function imgLoaded() {
         //console.log(numLoadedimages)
         //console.log(numImages)
         if (++numLoadedimages === numImages) {
-          getSliderImagesTotalWidth()
           initScroller()
           ++numLoadedSliders === numSliders && handleLoader.disableLoader()
         }
-      }
-
-      function getSliderImagesTotalWidth() {
-        sliderImages.forEach(image => {
-          totalWidth += image.offsetWidth
-        })
-        console.log(totalWidth)
       }
 
       // gatsbyCacheFix()
@@ -69,6 +59,22 @@ const FashionPage = ({ data }) => {
 
       //console.log(getSliderImages(slider))
       function initScroller() {
+        slider = [...document.querySelectorAll(".slider-container .slider")][
+          index++
+        ]
+
+        function getSliderImagesTotalWidth() {
+          let sliderImages = [
+            ...slider.querySelectorAll(".slider-images > img"),
+          ]
+          let totalWidth = 0
+          sliderImages.forEach(image => {
+            totalWidth += image.offsetWidth
+          })
+          console.log(totalWidth)
+          return totalWidth
+        }
+
         const onLeaveFunc = () => {
           //tl.restart()
           //tl.pause()
@@ -83,32 +89,32 @@ const FashionPage = ({ data }) => {
         // return (screenWidth <== 1024) ? scale
         // }
 
-        let tl = gsap
-          .timeline({
-            scrollTrigger: {
-              id: "slider1",
-              trigger: slider,
-              start: "top top",
-              // end: `+=${
-              //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
-              // }px`,
-              end: "+=900%",
-              pin: slider,
-              scrub: true,
-              toggleClass: "active",
-              invalidateOnRefresh: true,
-              onLeave: () => onLeaveFunc(),
-              //onEnterBack: () => onEnterBackFunc(),
-            },
-          })
+        let tl = gsap.timeline({
+          scrollTrigger: {
+            id: "slider1",
+            trigger: slider,
+            start: "top top",
+            // end: `+=${
+            //   getSliderImagesTotalWidth(slider) - slider.offsetWidth
+            // }px`,
+            end: "+=900%",
+            pin: slider,
+            scrub: true,
+            toggleClass: "active",
+            invalidateOnRefresh: true,
+            onLeave: () => onLeaveFunc(),
+            //onEnterBack: () => onEnterBackFunc(),
+          },
+          invalidateOnRefresh: true,
+        })
 
-          .to(slider, {
-            duration: 0.25,
-            paddingLeft: 0,
-            paddingRight: 0,
-            marginLeft: 0,
-            xPercent: 0,
-          })
+        tl.to(slider, {
+          duration: 0.25,
+          paddingLeft: 0,
+          paddingRight: 0,
+          marginLeft: 0,
+          xPercent: 0,
+        })
           .to(slider.querySelectorAll(".slider-images img"), {
             duration: 0.2,
             //ease: "power1",
@@ -123,7 +129,11 @@ const FashionPage = ({ data }) => {
           .to(slider.querySelector(".slider-images"), {
             duration: 1,
             //overwrite: true,
-            x: () => -(totalWidth - document.documentElement.clientWidth),
+            x: () =>
+              -(
+                getSliderImagesTotalWidth() -
+                document.documentElement.clientWidth
+              ),
           })
           .to(slider, {
             duration: 0.25,
