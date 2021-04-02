@@ -1,6 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 
+const SliderContainer = styled.div`
+  &:first-child .slider {
+    @media (max-width: 1024px) {
+      scroll-padding: 65px 0 0 0;
+    }
+  }
+`
+
 const Slider = styled.div`
   max-width: 1920px;
   width: 100%;
@@ -24,6 +32,7 @@ const Slider = styled.div`
   }
   @media (max-width: 1024px) {
     padding: 0;
+    scroll-snap-align: start;
   }
 `
 
@@ -32,6 +41,14 @@ const SliderImages = styled.div`
   align-items: center;
   height: 100%;
   max-height: 80vh;
+  @media (max-width: 1024px) {
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    max-height: 70vh;
+    &:first-child {
+      //scroll-padding: 65px;
+    }
+  }
 `
 
 const StyledImg = styled.img`
@@ -42,12 +59,17 @@ const StyledImg = styled.img`
   transition: transform 0.3s ease, margin 0.3s ease;
   &:not(:first-child) {
     opacity: 0;
-    //display: none;
   }
   @media (max-width: 1024px) {
     height: auto;
     max-height: inherit;
     width: 100%;
+    margin-left: unset;
+    transform: none !important;
+    scroll-snap-align: center;
+    &:not(:first-child) {
+      opacity: 1;
+    }
   }
 `
 
@@ -55,12 +77,10 @@ const StyledParagraph = styled.p`
   color: ${({ theme }) => (theme.isDark ? theme.white : theme.darkGrey)};
   margin: 20px 0 0;
   @media (max-width: 1024px) {
-    //margin-top: 48px;
     margin-top: 0;
-    position: absolute;
-    bottom: 100px;
-    width: 100%;
-    padding: 0 5%;
+    padding: 20px;
+    height: 100%;
+    max-height: 30%;
   }
 `
 
@@ -70,7 +90,7 @@ const PhotoSlider = ({ graphQlData, sliderName, sliderLabel }) => {
   }
 
   return (
-    <div className="slider-container">
+    <SliderContainer className="slider-container">
       <Slider className={`slider ${generateClass("slider")}`}>
         <SliderImages className="slider-images">
           {graphQlData[sliderName].edges.map(({ node }, i) => (
@@ -88,7 +108,7 @@ const PhotoSlider = ({ graphQlData, sliderName, sliderLabel }) => {
           {sliderLabel}
         </StyledParagraph>
       </Slider>
-    </div>
+    </SliderContainer>
   )
 }
 

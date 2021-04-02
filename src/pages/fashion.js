@@ -10,6 +10,14 @@ const SlidersContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  @media (max-width: 1024px) {
+    max-height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: mandatory;
+    scroll-snap-points-y: repeat(100vh);
+    scroll-snap-type: y mandatory;
+    //scroll-padding: 65px;
+  }
 `
 
 const FashionPage = ({ data }) => {
@@ -18,6 +26,7 @@ const FashionPage = ({ data }) => {
     ScrollTrigger.refresh()
 
     //setTimeout(() => {
+
     let screenWidth = window.screen.width
     let index = 0
     const numSliders = [...document.querySelectorAll(".slider")].length
@@ -43,21 +52,11 @@ const FashionPage = ({ data }) => {
         //console.log(numLoadedimages)
         //console.log(numImages)
         if (++numLoadedimages === numImages) {
-          initScroller()
+          screenWidth > 1024 && initScroller()
           ++numLoadedSliders === numSliders && handleLoader.disableLoader()
         }
       }
 
-      // gatsbyCacheFix()
-
-      // function gatsbyCacheFix() {
-      //   setTimeout(() => {
-      //     numLoaded === 0 && initScroller()
-      //     console.log("init")
-      //   }, 5000)
-      // }
-
-      //console.log(getSliderImages(slider))
       function initScroller() {
         slider = [...document.querySelectorAll(".slider-container .slider")][
           index++
@@ -76,8 +75,6 @@ const FashionPage = ({ data }) => {
         }
 
         const onLeaveFunc = () => {
-          //tl.restart()
-          //tl.pause()
           tl.progress(0)
         }
 
@@ -142,12 +139,13 @@ const FashionPage = ({ data }) => {
           })
       }
     })
+
     //}, 3000)
   })
 
   return (
     <>
-      <SlidersContainer>
+      <SlidersContainer className="sliders-container">
         <PhotoSlider
           graphQlData={data}
           sliderName={"slider1"}
