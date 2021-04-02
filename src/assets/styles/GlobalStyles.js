@@ -99,6 +99,20 @@ const GlobalStyle = createGlobalStyle`
         transform: translate3d(0, -1rem, 0);
       }
     }
+
+    @keyframes swipe {
+      0% {
+        opacity: 1;
+        transform: translate3d(40px, 0, 0);
+      }
+      60% {
+        opacity: 0.4;
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(-50px, 0, 0);
+      }
+    }
   `
 
 export default GlobalStyle

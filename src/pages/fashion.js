@@ -17,6 +17,9 @@ const SlidersContainer = styled.div`
     scroll-snap-points-y: repeat(100vh);
     scroll-snap-type: y mandatory;
     //scroll-padding: 65px;
+    ~ footer {
+      display: none;
+    }
   }
 `
 
@@ -70,7 +73,6 @@ const FashionPage = ({ data }) => {
           sliderImages.forEach(image => {
             totalWidth += image.offsetWidth
           })
-          console.log(totalWidth)
           return totalWidth
         }
 
