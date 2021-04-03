@@ -233,7 +233,7 @@ export const query = graphql`
   query {
     hero1: file(name: { eq: "hero1" }) {
       childImageSharp {
-        fluid(maxWidth: 1000, quality: 100) {
+        fluid(maxWidth: 1000, quality: 90) {
           src
           srcSet
           sizes
@@ -242,7 +242,7 @@ export const query = graphql`
     }
     hero2: file(name: { eq: "hero2" }) {
       childImageSharp {
-        fluid(maxWidth: 800, quality: 100) {
+        fluid(maxWidth: 800, quality: 90) {
           src
           srcSet
           sizes
