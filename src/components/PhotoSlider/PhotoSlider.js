@@ -1,9 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import MobileHint from "../MobileHint/MobileHint"
 
 const SliderContainer = styled.div`
-  padding-top: 65px;
+  //padding-top: 65px;
 `
 
 const Slider = styled.div`
@@ -19,6 +18,9 @@ const Slider = styled.div`
   transition: margin 0.25s ease;
   &:first-child {
     padding-top: 0;
+    @media (max-width: 1024px) {
+      padding-top: 40px;
+    }
   }
   &.active {
     margin-top: 10vh !important;
@@ -28,10 +30,10 @@ const Slider = styled.div`
     transform: none !important;
   }
   @media (max-width: 1024px) {
-    padding: 0;
+    height: auto;
+    padding: 60px 0;
     scroll-snap-align: start;
     justify-content: center;
-    //padding-bottom: 18% !important;
   }
 `
 
@@ -44,20 +46,14 @@ const SliderImages = styled.div`
     overflow: auto;
     scroll-snap-type: x mandatory;
     height: auto;
-    /* max-height: 70vh; */
-    &:first-child {
-      //scroll-padding: 65px;
-    }
     &::-webkit-scrollbar {
       width: 0;
       height: 5px;
     }
-
     &::-webkit-scrollbar-track {
       background-color: ${({ theme }) =>
         theme.isDark ? theme.black : theme.pink};
     }
-
     &::-webkit-scrollbar-thumb {
       background-color: ${({ theme }) =>
         theme.isDark ? theme.pink : theme.white};
@@ -94,8 +90,6 @@ const StyledParagraph = styled.p`
   @media (max-width: 1024px) {
     margin-top: 0;
     padding: 20px;
-    /* height: 100%;
-    max-height: 30%; */
   }
 `
 
@@ -107,7 +101,6 @@ const PhotoSlider = ({ graphQlData, sliderName, sliderLabel }) => {
   return (
     <SliderContainer className="slider-container">
       <Slider className={`slider ${generateClass("slider")}`}>
-        <MobileHint />
         <SliderImages className="slider-images">
           {graphQlData[sliderName].edges.map(({ node }, i) => (
             <StyledImg

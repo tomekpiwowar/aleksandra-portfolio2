@@ -5,8 +5,8 @@ const StyledDiv = styled.div`
   display: none;
   width: 100px;
   height: auto;
-  position: absolute;
-  top: 10px;
+  margin: 10vh auto 0 auto;
+  text-align: center;
   background-color: ${({ theme }) =>
     theme.isDark ? theme.darkGrey : theme.white};
   z-index: 2;
@@ -14,8 +14,6 @@ const StyledDiv = styled.div`
   @media (max-width: 1024px) {
     display: flex;
     flex-direction: column;
-    justify-self: center;
-    align-self: center;
   }
 `
 
@@ -32,18 +30,13 @@ const SwipeIcon = styled.div`
   }
 `
 
-const StyledParagraph = styled.p`
+const StyledSpan = styled.span`
   color: ${({ theme }) => (theme.isDark ? theme.white : theme.darkGrey)};
-  margin: 20px 0 0;
-  @media (max-width: 1024px) {
-    margin-top: 0;
-    padding: 20px;
-  }
 `
 
 const MobileHint = () => (
   <StyledDiv>
-    <span>Swipe</span>
+    <StyledSpan>Swipe</StyledSpan>
     <SwipeIcon className="swipe-icon">
       <div></div>
     </SwipeIcon>

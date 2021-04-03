@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { graphql } from "gatsby"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import MobileHint from "../components/MobileHint/MobileHint"
 import PhotoSlider from "../components/PhotoSlider/PhotoSlider"
 import { handleLoader } from "../components/Loader/Loader"
 
@@ -10,17 +11,6 @@ const SlidersContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  @media (max-width: 1024px) {
-    max-height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: mandatory;
-    scroll-snap-points-y: repeat(100vh);
-    scroll-snap-type: y mandatory;
-    //scroll-padding: 65px;
-    ~ footer {
-      display: none;
-    }
-  }
 `
 
 const FashionPage = ({ data }) => {
@@ -147,6 +137,7 @@ const FashionPage = ({ data }) => {
 
   return (
     <>
+      <MobileHint />
       <SlidersContainer className="sliders-container">
         <PhotoSlider
           graphQlData={data}
